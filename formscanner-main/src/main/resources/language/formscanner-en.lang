@@ -85,8 +85,8 @@ about.tab.name=About
 license.tab.name=License
 english.label=English
 italian.label=Italiano
-language.changed=restart FormScanner application for the changes to take effect 
+language.changed=Restart FormScanner application for the changes to take effect 
 settings.popup.title=Settings
 template.saved.popup.title=Template
 template.loaded.popup.title=Template
-about.text=<html><h2>FormScanner - Free OMR Software</h2><h3>Version 0.5.0</h3>Copyright 2013 Alberto Borsetta<br />Visit <a href=\"http://sourceforge.net/projects/formscanner/\">Project HomePage</a> for more information about the product</html>
+about.text=<html><h2 align=\"center\">FormScanner - Free OMR Software</h2><h3 align=\"center\">Version 0.5.1-SNAPSHOT</h3><p align=\"center\">Copyright 2013 Alberto Borsetta</p><p align=\"center\">Visit <a href=\"http://sourceforge.net/projects/formscanner/\">Project HomePage</a> for more information about the product</p></html>
