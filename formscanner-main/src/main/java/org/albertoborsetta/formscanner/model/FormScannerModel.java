@@ -28,7 +28,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.io.File;
 import java.net.URL;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +38,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FilenameUtils;
@@ -311,14 +311,14 @@ public class FormScannerModel {
 			if (rows==1 && values==1) {
 				if (points.isEmpty()) {
 					points.add(p2);
-					view.update();
+					view.repaint();
 					manageTemplateFrame.setupTable(points);
 					manageTemplateFrame.toFront();
 				}
 			} else {
 				if (points.isEmpty()) {
 					points.add(p2);
-					view.update();
+					view.repaint();
 				} else {
 					FormPoint p1 = points.get(0);
 					points.clear();
@@ -338,7 +338,7 @@ public class FormScannerModel {
 							points.add(pi);
 						}						
 					}
-					view.update();
+					view.repaint();
 					manageTemplateFrame.setupTable(points);
 					manageTemplateFrame.toFront();
 				}
@@ -471,5 +471,9 @@ public class FormScannerModel {
 				FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.LANGUAGE_CHANGED),
 				FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.SETTINGS_POPUP),
 				JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public void resetPoints() {
+		points.clear();
 	}
 }
