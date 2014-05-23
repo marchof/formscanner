@@ -119,3 +119,5 @@ shape.type.option.label=Marker shape
 shape.size.option.label=Marker size (px)
 marker.options=Marker options
 scan.options=Scan options
+template.not.saved=Template not saved
+template.not.saved.popup=Template

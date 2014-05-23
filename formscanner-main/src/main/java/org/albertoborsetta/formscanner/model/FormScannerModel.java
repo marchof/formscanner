@@ -516,18 +516,30 @@ public class FormScannerModel {
 
 	public void saveTemplate(TabbedView view) {
 		File template = formTemplate.saveToFile(path);
-		JOptionPane
-				.showMessageDialog(
-						null,
-						FormScannerTranslation
-								.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_SAVED),
-						FormScannerTranslation
-								.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_SAVED_POPUP),
-						JOptionPane.INFORMATION_MESSAGE);
-		String templatePath = template.getAbsolutePath();
-		configurations.setProperty(FormScannerConfigurationKeys.TEMPLATE,
-				templatePath);
-		configurations.store();
+
+		if (template != null) {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							FormScannerTranslation
+									.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_SAVED),
+							FormScannerTranslation
+									.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_SAVED_POPUP),
+							JOptionPane.INFORMATION_MESSAGE);
+			String templatePath = template.getAbsolutePath();
+			configurations.setProperty(FormScannerConfigurationKeys.TEMPLATE,
+					templatePath);
+			configurations.store();
+		} else {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							FormScannerTranslation
+									.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_NOT_SAVED),
+							FormScannerTranslation
+									.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_NOT_SAVED_POPUP),
+							JOptionPane.ERROR_MESSAGE);
+		}
 		view.dispose();
 	}
 

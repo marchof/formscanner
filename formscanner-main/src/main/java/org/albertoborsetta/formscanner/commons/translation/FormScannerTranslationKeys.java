@@ -154,4 +154,6 @@ public class FormScannerTranslationKeys {
 	public static final String MARKER_OPTIONS = "marker.options";
 	public static final String SCAN_OPTIONS = "scan.options";
 	public static final String FORMSCANNER_MAIN_TITLE = "formscanner.main.title";
+public static final String TEMPLATE_NOT_SAVED = "template.not.saved";
+	public static final String TEMPLATE_NOT_SAVED_POPUP = "template.not.saved.popup";
 }
