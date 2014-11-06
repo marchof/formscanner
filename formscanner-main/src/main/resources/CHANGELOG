@@ -6,6 +6,14 @@ NEW FEATURES
 FIXES
 ---
 
+FormScanner 0.8.1 (released 2014-11-07)
+===
+
+FIXES
+---
+* OutOfMemoryError scanning too many images
+* Problems of accents in Portuguese language
+
 FormScanner 0.8.0 (released 2014-10-24)
 ===
 NEW FEATURES
