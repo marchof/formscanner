@@ -58,14 +58,15 @@ public class FormFileUtils extends JFileChooser {
 		public Integer size() {
 			return headerKeys.size();
 		}
-
-		public String[] getHeaderKeys() {
+		
+		public String[] getHeaderKeys(Boolean sort) {
 			String[] header = new String[headerKeys.size() + 1];
 
 			int i = 0;
 			header[i++] = getFirstHeader();
 
-			Collections.sort(headerKeys);
+			if (sort) Collections.sort(headerKeys);
+			
 			for (String headerKey : headerKeys) {
 				header[i++] = headerKey;
 			}
@@ -115,7 +116,7 @@ public class FormFileUtils extends JFileChooser {
 		return instance;
 	}
 
-	private FormFileUtils(Locale locale) {
+	protected FormFileUtils(Locale locale) {
 		super();
 		setFont(FormScannerFont.getFont());
 		setLocale(locale);
@@ -190,7 +191,7 @@ public class FormFileUtils extends JFileChooser {
 		setFileFilter(templateFilter);
 	}
 
-	private void setCsvFilter() {
+	protected void setCsvFilter() {
 		resetChoosableFileFilters();
 		FileNameExtensionFilter templateFilter = new FileNameExtensionFilter(
 				FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.CSV_FILE), "csv");
@@ -236,7 +237,7 @@ public class FormFileUtils extends JFileChooser {
 		String aKey = (String) filledForms.keySet().toArray()[0];
 		FormTemplate aForm = filledForms.get(aKey);
 		Header header = getHeader(aForm);
-		String[] headerKeys = header.getHeaderKeys();
+		String[] headerKeys = header.getHeaderKeys(true);
 		ArrayList<HashMap<String, String>> results = getResults(filledForms, header);
 
 		ICsvMapWriter mapWriter = null;
@@ -280,7 +281,7 @@ public class FormFileUtils extends JFileChooser {
 		return file;
 	}
 
-	private static ArrayList<HashMap<String, String>> getResults(HashMap<String, FormTemplate> filledForms,
+	protected static ArrayList<HashMap<String, String>> getResults(HashMap<String, FormTemplate> filledForms,
 			Header header) {
 		ArrayList<HashMap<String, String>> results = new ArrayList<>();
 		for (Entry<String, FormTemplate> filledForm : filledForms.entrySet()) {
@@ -321,7 +322,7 @@ public class FormFileUtils extends JFileChooser {
 			for (Entry<String, FormQuestion> fieldEntry : fields.entrySet()) {
 				String headerKey = fieldEntry.getKey();
 				if (!groupEntry.getKey().equals(FormScannerConstants.EMPTY_GROUP_NAME))
-					headerKey = "[" + groupEntry.getKey() + "] " + headerKey;
+					headerKey = groupEntry.getKey() + "." + headerKey;
 				header.addHeaderKey(headerKey);
 				header.addGroupName(headerKey, groupEntry.getKey());
 				header.addFieldName(headerKey, fieldEntry.getKey());
@@ -333,7 +334,7 @@ public class FormFileUtils extends JFileChooser {
 			for (Entry<String, FormArea> areaEntry : areas.entrySet()) {
 				String headerKey = areaEntry.getKey();
 				if (!groupEntry.getKey().equals(FormScannerConstants.EMPTY_GROUP_NAME))
-					headerKey = "[" + groupEntry.getKey() + "] " + headerKey;
+					headerKey = groupEntry.getKey() + "." + headerKey;
 				header.addHeaderKey(headerKey);
 				header.addGroupName(headerKey, groupEntry.getKey());
 				header.addFieldName(headerKey, areaEntry.getKey());
