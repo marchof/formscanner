@@ -4,7 +4,7 @@ package com.albertoborsetta.formscanner.api.commons.translation;
  * The Translation Keys Constants.
  *
  * @author Alberto Borsetta
- * @version 1.1.3
+ * @version 1.1.4-SNAPSHOT
  */
 public class TranslationKeys {
 
