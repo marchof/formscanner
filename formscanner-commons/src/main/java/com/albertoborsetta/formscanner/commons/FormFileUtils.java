@@ -1,5 +1,6 @@
 package com.albertoborsetta.formscanner.commons;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 
@@ -22,11 +24,18 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.supercsv.io.CsvMapWriter;
 import org.supercsv.io.ICsvMapWriter;
 import org.supercsv.prefs.CsvPreference;
 import org.w3c.dom.Document;
+
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
+import net.lingala.zip4j.core.ZipFile;
 
 import com.albertoborsetta.formscanner.api.FormArea;
 import com.albertoborsetta.formscanner.api.FormGroup;
@@ -42,6 +51,7 @@ public class FormFileUtils extends JFileChooser {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static FormFileUtils instance;
+	private static String temporaryPath;
 
 	public class Header {
 
@@ -58,15 +68,16 @@ public class FormFileUtils extends JFileChooser {
 		public Integer size() {
 			return headerKeys.size();
 		}
-		
+
 		public String[] getHeaderKeys(Boolean sort) {
 			String[] header = new String[headerKeys.size() + 1];
 
 			int i = 0;
 			header[i++] = getFirstHeader();
 
-			if (sort) Collections.sort(headerKeys);
-			
+			if (sort)
+				Collections.sort(headerKeys);
+
 			for (String headerKey : headerKeys) {
 				header[i++] = headerKey;
 			}
@@ -109,17 +120,18 @@ public class FormFileUtils extends JFileChooser {
 		}
 	}
 
-	public static FormFileUtils getInstance(Locale locale) {
+	public static FormFileUtils getInstance(Locale locale, String path) {
 		if (instance == null) {
-			instance = new FormFileUtils(locale);
+			instance = new FormFileUtils(locale, path);
 		}
 		return instance;
 	}
 
-	protected FormFileUtils(Locale locale) {
+	protected FormFileUtils(Locale locale, String path) {
 		super();
 		setFont(FormScannerFont.getFont());
 		setLocale(locale);
+		temporaryPath = path;
 		updateUI();
 	}
 
@@ -155,10 +167,26 @@ public class FormFileUtils extends JFileChooser {
 		return chooseFile();
 	}
 
-	public File chooseTemplate() {
+	public HashMap<String, String> chooseTemplate() throws IOException {
 		setMultiSelectionEnabled(false);
-		setTemplateFilter();
-		return chooseFile();
+		setCompressedTemplateFilter();
+		HashMap<String, String> files = new HashMap<>();
+		File compressedTemplate = chooseFile();
+		files.put(FormScannerConstants.COMPRESSED, compressedTemplate.getAbsolutePath());
+		try {
+			ZipFile zipFile = new ZipFile(compressedTemplate);
+			List<FileHeader> fileHeaderList = zipFile.getFileHeaders();
+			for (FileHeader fileHeader: fileHeaderList) {
+				String fileName = fileHeader.getFileName();
+				String key = ("xtmpl".equals(FilenameUtils.getExtension(fileName))) ? FormScannerConstants.TEMPLATE : FormScannerConstants.IMAGE;   
+				files.put(key, fileName);
+			}
+			zipFile.extractAll(temporaryPath);
+		} catch (ZipException ze) {
+			throw new IOException();
+			
+		}
+		return files;
 	}
 
 	private void setImagesFilter() {
@@ -184,6 +212,13 @@ public class FormFileUtils extends JFileChooser {
 		setFileFilter(allImagesFilter);
 	}
 
+	private void setCompressedTemplateFilter() {
+		resetChoosableFileFilters();
+		FileNameExtensionFilter templateFilter = new FileNameExtensionFilter(
+				FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_FILE), "ztmpl");
+		setFileFilter(templateFilter);
+	}
+	
 	private void setTemplateFilter() {
 		resetChoosableFileFilters();
 		FileNameExtensionFilter templateFilter = new FileNameExtensionFilter(
@@ -198,7 +233,31 @@ public class FormFileUtils extends JFileChooser {
 		setFileFilter(templateFilter);
 	}
 
-	private File saveTemplateAs(File file, Document doc, boolean notify) {
+	private File saveCompressedTemplateAs(File file, ArrayList<File> files, boolean notify) {
+		try {
+			setMultiSelectionEnabled(false);
+			setSelectedFile(file);
+
+			if (notify) {
+				setCompressedTemplateFilter();
+				int returnValue = showSaveDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					file = getSelectedFile();					
+				}
+			}
+			ZipFile zipFile = new ZipFile(file);
+			ZipParameters parameters = new ZipParameters();
+			parameters.setCompressionMethod(Zip4jConstants.COMP_STORE);
+			parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_FASTEST);
+			zipFile.addFiles(files, parameters);
+			
+		} catch (ZipException e) {
+			e.printStackTrace();
+		}
+		return file;
+	}
+	
+	private void saveTemplateAs(File file, Document doc) {
 		try {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
@@ -208,29 +267,13 @@ public class FormFileUtils extends JFileChooser {
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			DOMSource source = new DOMSource(doc);
 
-			setMultiSelectionEnabled(false);
-			setSelectedFile(file);
-
-			if (notify) {
-				setTemplateFilter();
-				int returnValue = showSaveDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					file = getSelectedFile();
-					FileOutputStream fos = new FileOutputStream(file);
-					OutputStreamWriter out = new OutputStreamWriter(fos, Charset.forName("UTF-8"));
-					StreamResult result = new StreamResult(out);
-					transformer.transform(source, result);
-				}
-			} else {
-				FileOutputStream fos = new FileOutputStream(file);
-				OutputStreamWriter out = new OutputStreamWriter(fos, Charset.forName("UTF-8"));
-				StreamResult result = new StreamResult(out);
-				transformer.transform(source, result);
-			}
+			FileOutputStream fos = new FileOutputStream(file);
+			OutputStreamWriter out = new OutputStreamWriter(fos, Charset.forName("UTF-8"));
+			StreamResult result = new StreamResult(out);
+			transformer.transform(source, result);
 		} catch (TransformerException | IOException e) {
 			e.printStackTrace();
 		}
-		return file;
 	}
 
 	public File saveCsvAs(File file, HashMap<String, FormTemplate> filledForms, boolean notify) {
@@ -288,24 +331,24 @@ public class FormFileUtils extends JFileChooser {
 			FormTemplate form = filledForm.getValue();
 			HashMap<String, FormGroup> groups = form.getGroups();
 			HashMap<String, String> result = new HashMap<>();
-			
+
 			result.put(header.getFirstHeader(), filledForm.getKey());
-			
-			for (String headerKey: header.getKeys()) {
+
+			for (String headerKey : header.getKeys()) {
 				FormGroup group = groups.get(header.getGroupForKey(headerKey));
 				String fieldName = header.getFieldForKey(headerKey);
-				
+
 				FormQuestion field = group.getFields().get(fieldName);
 				if (field != null) {
 					result.put(headerKey, field.getValues());
 				}
-				
+
 				FormArea area = group.getAreas().get(fieldName);
 				if (area != null) {
 					result.put(headerKey, area.getText());
 				}
 			}
-			
+
 			results.add(result);
 
 		}
@@ -348,13 +391,40 @@ public class FormFileUtils extends JFileChooser {
 		File outputFile = null;
 
 		try {
-			outputFile = new File(path + template.getName() + ".xtmpl");
+			ArrayList<File> files = new ArrayList<>();
+			
 			Document xml = template.getXml();
-			outputFile = saveTemplateAs(outputFile, xml, notify);
+			File templateFile = new File(temporaryPath + template.getName() + ".xtmpl");
+			saveTemplateAs(templateFile, xml);
+
+			BufferedImage img = template.getImage();
+			File imageFile = new File(temporaryPath + template.getImageName());
+			ImageIO.write(img, FilenameUtils.getExtension(template.getImageName()), imageFile);
+			
+			files.add(templateFile);
+			files.add(imageFile);
+			
+			outputFile = new File(path + template.getName() + "xtmpl");
+			outputFile = saveCompressedTemplateAs(outputFile, files, notify);
+			
+			templateFile.delete();
+			imageFile.delete();
 		} catch (ParserConfigurationException | IOException e) {
 			e.printStackTrace();
 		}
 
 		return outputFile;
+	}
+
+	private File getFile(String fileName) {
+		return new File(fileName);
+	}
+	
+	public File getTemplate(String fileName) {
+		return getFile(temporaryPath + fileName);
+	}
+	
+	public BufferedImage getImage(String fileName) throws IOException {
+		return ImageIO.read(getFile(temporaryPath + fileName));
 	}
 }

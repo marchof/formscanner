@@ -178,6 +178,11 @@ public class FormScannerConstants extends Constants {
 	public static final String OPEN_TEMPLATE_IMAGE = "OPEN_TEMPLATE_IMAGE";
 	public static final String CLEAR_IMAGES = "CLEAR_TEMPLATE";
 	
+	public static final String COMPRESSED = "COMPRESSED";
+	public static final String TEMPLATE = "TEMPLATE";
+	public static final String IMAGE = "IMAGE";
+	
+	
 
 	public enum Frame {
 

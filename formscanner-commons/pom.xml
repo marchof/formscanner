@@ -32,6 +32,11 @@
 			<artifactId>swingx-all</artifactId>
 			<version>${swingx.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.lingala.zip4j</groupId>
+			<artifactId>zip4j</artifactId>
+			<version>${zip4j.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<resources>
@@ -49,5 +54,6 @@
 		<super-csv.version>2.1.0</super-csv.version>
 		<watchmaker-swing.version>0.7.1</watchmaker-swing.version>
 		<swingx.version>1.6.5-1</swingx.version>
+		<zip4j.version>1.3.2</zip4j.version>
 	</properties>
 </project>

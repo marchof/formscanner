@@ -84,8 +84,8 @@ import java.util.concurrent.ExecutionException;
  * {@code
  * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
  * <template density="40" threshold="127" version="3.0">
- * <image name="image.jpg"/>BINARY IMAGE DATA</image>
- * 	<rotation angle="0.0"/>
+ * <image name="image.jpg"/>
+ * <rotation angle="0.0"/>
  * <crop top="0" left="0" right="0" bottom="0"/>
  * 	<corners type="ANGULAR">
  * 		<corner position="TOP_RIGHT">
@@ -236,14 +236,6 @@ public final class FormTemplate {
 			// imageElement
 			Element imageElement = doc.createElement("image");
 			imageElement.setAttribute("name", template.getImageName());
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(template.getImage(), FilenameUtils.getExtension(template.getImageName()), baos);
-			baos.flush();
-			Base64 encoder = new Base64();
-			String encodedImage = encoder.encodeToString(baos.toByteArray());
-			baos.close();
-			imageElement.setTextContent(encodedImage);
-			templateElement.appendChild(imageElement);
 
 			// crop element
 			Element cropElement = doc.createElement("crop");
@@ -327,10 +319,6 @@ public final class FormTemplate {
 
 			Element imageElement = (Element) templateElement.getElementsByTagName("image").item(0);
 			template.setImageName(imageElement.getAttribute("name"));
-			String encodedImage = imageElement.getTextContent();
-			Base64 decoder = new Base64();
-			byte[] bytes = decoder.decode(encodedImage);
-			template.setImage(ImageIO.read(new ByteArrayInputStream(bytes)));
 
 			Element rotationElement = (Element) templateElement.getElementsByTagName("rotation").item(0);
 			template.setRotation(Double.parseDouble(rotationElement.getAttribute("angle")));

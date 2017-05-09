@@ -72,6 +72,7 @@ public class FormScannerModel {
 	private String templatePath;
 	private String resultsPath;
 	private String propertiesPath;
+	private String temporaryPath;
 	private final HashMap<String, File> openedFiles = new HashMap<>();
 	private RenameFileFrame renameFileFrame;
 	private FormScannerWorkspace workspace;
@@ -147,6 +148,7 @@ public class FormScannerModel {
 		}
 
 		propertiesPath = propertiesPath + "/properties/";
+		temporaryPath = propertiesPath + "/temp/";
 
 		configurations = FormScannerConfiguration.getConfiguration(propertiesPath, installPath + "/");
 
@@ -163,7 +165,7 @@ public class FormScannerModel {
 		} else {
 			locale = new Locale(locales[0]);
 		}
-		fileUtils = FormFileUtils.getInstance(locale);
+		fileUtils = FormFileUtils.getInstance(locale, temporaryPath);
 
 		orientation = ComponentOrientation.getOrientation(locale);
 
@@ -762,17 +764,16 @@ public class FormScannerModel {
 	}
 
 	public boolean openTemplate() {
-		return openTemplate(fileUtils.chooseTemplate(), true);
+		return openTemplate(true);
 	}
 
-	private boolean openTemplate(File template, boolean notify) {
-		if (template == null) {
-			return false;
-		}
+	private boolean openTemplate(boolean notify) {
 
 		try {
+			HashMap<String, String> files = fileUtils.chooseTemplate();
 			formTemplate = new FormTemplate();
-			formTemplate.presetFormTemplate(template);
+			formTemplate.presetFormTemplate(fileUtils.getTemplate(files.get(FormScannerConstants.TEMPLATE)));
+			formTemplate.setImage(fileUtils.getImage(files.get(FormScannerConstants.IMAGE)));
 
 			threshold = formTemplate.getThreshold() < 0 ? threshold : formTemplate.getThreshold();
 			density = formTemplate.getDensity() < 0 ? density : formTemplate.getDensity();
@@ -793,8 +794,8 @@ public class FormScannerModel {
 						FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_LOADED_POPUP),
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-			templatePath = FilenameUtils.getFullPath(template.getAbsolutePath());
-			String templateFile = FilenameUtils.getName(template.getAbsolutePath());
+			templatePath = FilenameUtils.getFullPath(files.get(FormScannerConstants.COMPRESSED));
+			String templateFile = FilenameUtils.getName(files.get(FormScannerConstants.COMPRESSED));
 			configurations.setProperty(FormScannerConfigurationKeys.TEMPLATE, templateFile);
 			configurations.setProperty(FormScannerConfigurationKeys.TEMPLATE_SAVE_PATH, templatePath);
 			configurations.store();
