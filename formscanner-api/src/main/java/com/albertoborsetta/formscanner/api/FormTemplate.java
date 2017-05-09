@@ -236,6 +236,7 @@ public final class FormTemplate {
 			// imageElement
 			Element imageElement = doc.createElement("image");
 			imageElement.setAttribute("name", template.getImageName());
+			templateElement.appendChild(imageElement);
 
 			// crop element
 			Element cropElement = doc.createElement("crop");
