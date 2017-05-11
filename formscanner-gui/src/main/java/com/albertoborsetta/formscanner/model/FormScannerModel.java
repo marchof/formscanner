@@ -29,6 +29,7 @@ import com.albertoborsetta.formscanner.api.commons.Constants.CornerType;
 import com.albertoborsetta.formscanner.api.commons.Constants.Corners;
 import com.albertoborsetta.formscanner.api.commons.Constants.ShapeType;
 import com.albertoborsetta.formscanner.commons.FormFileUtils;
+import com.albertoborsetta.formscanner.commons.FormFileUtils.Header;
 import com.albertoborsetta.formscanner.commons.FormScannerConstants;
 import com.albertoborsetta.formscanner.commons.FormScannerConstants.Action;
 import com.albertoborsetta.formscanner.commons.FormScannerConstants.Frame;
@@ -564,6 +565,10 @@ public class FormScannerModel {
 			loadTemplateImage(Mode.SETUP_AREA);
 			break;
 		}
+	}
+	
+	public void createFormImageFrame() {
+		createFormImageFrame(null, Mode.VIEW);
 	}
 
 	public void createFormImageFrame(FormTemplate template, Mode mode) {
@@ -1114,9 +1119,9 @@ public class FormScannerModel {
 
 	private void loadTemplateImage(Mode mode) {
 		if (imageFrame == null) {
-			imageFrame = new ImageFrame(this, formTemplate);
+			imageFrame = new ImageFrame(this, formTemplate, mode);
 		}
-		imageFrame.setMode(mode);
+//		imageFrame.setMode(mode);
 		imageFrame.setVisible(true);
 		workspace.arrangeFrame(imageFrame);
 		
@@ -1136,5 +1141,9 @@ public class FormScannerModel {
 
 	public int getLastGroupIndex() {
 		return nextGroupIndex;
+	}
+
+	public Header getHeader() {
+		return fileUtils.getHeader(formTemplate);
 	}
 }

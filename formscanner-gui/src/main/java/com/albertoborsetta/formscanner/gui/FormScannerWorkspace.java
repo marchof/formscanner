@@ -81,7 +81,10 @@ public class FormScannerWorkspace extends JFrame {
 
 		desktop = new JDesktopPane();
 		desktop.setBackground(new Color(252, 252, 252, 255));
+
 		dataPanel = new DataPanel(model, desktop);
+		dataPanel.setResizeWeight(1.0);
+		dataPanel.setDividerLocation(1.0);
 
 		JPanel desktopPanel = new PanelBuilder(orientation).withLayout(new BorderLayout())
 				.add(dataPanel.getPanelControls(), BorderLayout.SOUTH).add(dataPanel, BorderLayout.CENTER).build();

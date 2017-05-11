@@ -523,8 +523,8 @@ public class ManageTemplateFrame extends InternalFrame implements WizardTabView 
 			isMultiple.setSelected(false);
 			rejectMultiple.setSelected(false);
 		}
-		if (model.isGroupsEnabled())
-			setOfQuestionsLabel.setText(StringUtils.EMPTY);
+//		if (model.isGroupsEnabled())
+//			setOfQuestionsLabel.setText(StringUtils.EMPTY);
 	}
 
 	public FieldType getFieldType() {

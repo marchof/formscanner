@@ -119,6 +119,10 @@ public class FormFileUtils extends JFileChooser {
 			return firstHeader;
 		}
 	}
+	
+	public static FormFileUtils getInstance(Locale locale) {
+		return getInstance(locale, null);
+	}
 
 	public static FormFileUtils getInstance(Locale locale, String path) {
 		if (instance == null) {
@@ -168,10 +172,16 @@ public class FormFileUtils extends JFileChooser {
 	}
 
 	public HashMap<String, String> chooseTemplate() throws IOException {
+		return chooseTemplate(null);
+	}
+	
+	public HashMap<String, String> chooseTemplate(File compressedTemplate) throws IOException {
 		setMultiSelectionEnabled(false);
 		setCompressedTemplateFilter();
 		HashMap<String, String> files = new HashMap<>();
-		File compressedTemplate = chooseFile();
+		if (compressedTemplate == null) {
+			compressedTemplate = chooseFile();
+		}
 		files.put(FormScannerConstants.COMPRESSED, compressedTemplate.getAbsolutePath());
 		try {
 			ZipFile zipFile = new ZipFile(compressedTemplate);

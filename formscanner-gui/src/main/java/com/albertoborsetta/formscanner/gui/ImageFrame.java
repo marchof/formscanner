@@ -42,17 +42,17 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 	private Mode mode;
 	private FormTemplate template;
 	private ImageScrollPane scrollPane;
-
+	
 	/**
-	 * Create the frame in View Mode.
-	 *
-	 * @param model
-	 * @param image
-	 * @param template
+	 * Create an empty ImageFrame in View mode
+	 * 
+	 *  @param model
 	 */
-	public ImageFrame(FormScannerModel model, FormTemplate template) {
-		this(model, template, Mode.VIEW);
+	
+	public ImageFrame(FormScannerModel model) {
+		this(model, null, Mode.VIEW);
 	}
+	
 	/**
 	 * Create the frame.
 	 *
@@ -80,7 +80,8 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 		setTitle(FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.IMAGE_FRAME_TITLE));
 		setFrameIcon(FormScannerResources.getIconFor(FormScannerResourcesKeys.IMAGES_ICON, 16));
 
-		imagePanel = new ImagePanel(template.getImage());
+		BufferedImage img = (template != null) ? template.getImage() : new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+		imagePanel = new ImagePanel(img);
 		scrollPane = new ImageScrollPane(imagePanel);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 	}
@@ -291,7 +292,7 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 			setImage(image);
 		}
 
-		public void setZoom(Double zoom) {
+		private void setZoom(Double zoom) {
 			this.zoom = zoom;
 		}
 
@@ -408,7 +409,7 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 			}
 		}
 
-		public void showCorners(Graphics2D g) {
+		private void showCorners(Graphics2D g) {
 			HashMap<Corners, FormPoint> corners = template.getCorners();
 			if (corners.isEmpty()) {
 				return;
@@ -436,19 +437,19 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 			imageHeight = image.getHeight();
 		}
 
-		public int getImageWidth() {
+		private int getImageWidth() {
 			return imageWidth;
 		}
 
-		public int getImageHeight() {
+		private int getImageHeight() {
 			return imageHeight;
 		}
 
-		public void setTemporaryPoint(FormPoint p) {
+		private void setTemporaryPoint(FormPoint p) {
 			temporaryPoint = p;
 		}
 
-		public void clearTemporaryPoint() {
+		private void clearTemporaryPoint() {
 			temporaryPoint = null;
 		}
 	}

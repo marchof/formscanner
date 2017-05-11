@@ -83,7 +83,6 @@ public class DataPanel extends JSplitPane {
 	private ComponentOrientation orientation;
 	private FormScannerModel model;
 	private FormScannerWorkspace workspace;
-	private float defaultDividerLocation = 0.25F;
 	private JButton openTemplateImage;
 	private boolean isLoaded;
 	private JPanel templatePanel;
@@ -258,8 +257,6 @@ public class DataPanel extends JSplitPane {
 		setContinuousLayout(true);
 		setTopComponent(desktop);
 		setBottomComponent(createContentPanel());
-		setResizeWeight(0.8);
-		setDividerLocation(defaultDividerLocation);
 	}
 
 	private JPanel createContentPanel() {

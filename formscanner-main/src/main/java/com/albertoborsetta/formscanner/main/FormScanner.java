@@ -16,6 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.xml.sax.SAXException;
 
 import com.albertoborsetta.formscanner.api.FormTemplate;
@@ -57,6 +58,7 @@ public class FormScanner {
 							}
 						}
 						FormScannerWorkspace desktop = new FormScannerWorkspace(model);
+//						model.createFormImageFrame();
 						desktop.setIconImage(model.getIcon());
 					} catch (UnsupportedEncodingException
 							| ClassNotFoundException | InstantiationException
@@ -68,13 +70,26 @@ public class FormScanner {
 			});
 		} else {
 			Locale locale = Locale.getDefault();
-			FormFileUtils fileUtils = FormFileUtils.getInstance(locale);
+			String osName = System.getProperty("os.name");			
+			String temporaryPath = System.getProperty("user.home");
+			if (StringUtils.contains(osName, "Windows")) {
+				temporaryPath += "/AppData/Local/FormScanner/temp";
+			} else {
+				temporaryPath += "/.FormScanner/temp";
+			}
+
+			FormFileUtils fileUtils = FormFileUtils.getInstance(locale, temporaryPath);
 			
-			File templateFile = new File(args[0]);
-			FormTemplate template = null;
+			File compressedTemplate = new File(args[0]);
+			HashMap<String, String> files = new HashMap<>();
+			FormTemplate template = null; 
 			try {
+				files = fileUtils.chooseTemplate(compressedTemplate);
 				template = new FormTemplate();
-				template.presetFormTemplate(templateFile);
+				template.presetFormTemplate(fileUtils.getTemplate(files.get(FormScannerConstants.TEMPLATE)));
+				template.setImage(fileUtils.getImage(files.get(FormScannerConstants.IMAGE)));
+				
+				// TODO Verificare il discorso aggiornamento di versione
 				if (!FormScannerConstants.CURRENT_TEMPLATE_VERSION.equals(template.getVersion())) {
 					fileUtils.saveToFile(FilenameUtils.getFullPath(args[0]), template, false);
 				}
@@ -116,6 +131,7 @@ public class FormScanner {
 					args[1] + System.getProperty("file.separator") + "results_" + sdf
 							.format(today) + ".csv");
 			fileUtils.saveCsvAs(outputFile, filledForms, false);
+			fileUtils.saveToFile(FilenameUtils.getFullPath(args[0]), template, false);
 			System.exit(0);
 		}
 	}
