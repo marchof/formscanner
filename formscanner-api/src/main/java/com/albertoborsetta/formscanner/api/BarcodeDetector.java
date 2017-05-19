@@ -38,7 +38,8 @@ public class BarcodeDetector extends FormScannerDetector
 
 	@Override
 	public HashMap<String, FormArea> call() throws Exception {
-		LuminanceSource source = new BufferedImageLuminanceSource(image);
+		BufferedImage subImage = getAreaImage(image);
+		LuminanceSource source = new BufferedImageLuminanceSource(subImage);
 		BinaryBitmap bitmap = new BinaryBitmap(new GlobalHistogramBinarizer(source));
 
 		Reader reader = new MultiFormatReader();
@@ -75,6 +76,23 @@ public class BarcodeDetector extends FormScannerDetector
 				? resultBarcode.getText() : StringUtils.EMPTY);
 		barcodes.put(barcodeArea.getName(), resultArea);
 		return barcodes;
+	}
+	
+	private BufferedImage getAreaImage(BufferedImage image) {
+		FormPoint topLeftCorner = calcResponsePoint(barcodeArea.getCorner(Corners.TOP_LEFT)); 
+		FormPoint bottomLeftCorner = calcResponsePoint(barcodeArea.getCorner(Corners.BOTTOM_LEFT));
+		FormPoint topRightCorner = calcResponsePoint(barcodeArea.getCorner(Corners.TOP_RIGHT));
+		FormPoint bottomRightCorner = calcResponsePoint(barcodeArea.getCorner(Corners.BOTTOM_RIGHT));
+		
+		int minX = (int) Math.min(topLeftCorner.getX(), bottomLeftCorner.getX());
+		int minY = (int) Math.min(topLeftCorner.getY(), topRightCorner.getY());
+		int maxX = (int) Math.max(topRightCorner.getX(), bottomRightCorner.getX());
+		int maxY = (int) Math.max(bottomLeftCorner.getY(), bottomRightCorner.getY());
+		int subImageWidth = maxX - minX;
+		int hsubImageHeight = maxY - minY;
+		BufferedImage subImage = image.getSubimage(
+				minX, minY, subImageWidth, hsubImageHeight);
+		return subImage;
 	}
 
 	private FormArea calcResultArea() {
