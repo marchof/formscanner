@@ -38,7 +38,6 @@ public class BarcodeDetector extends FormScannerDetector
 	@Override
 	public HashMap<String, FormArea> call() throws Exception {
 		BufferedImage subImage = getAreaImage(image);
-//		LuminanceSource source = new BufferedImageLuminanceSource(image);
 		LuminanceSource source = new BufferedImageLuminanceSource(subImage);
 		BinaryBitmap bitmap = new BinaryBitmap(new GlobalHistogramBinarizer(source));
 
