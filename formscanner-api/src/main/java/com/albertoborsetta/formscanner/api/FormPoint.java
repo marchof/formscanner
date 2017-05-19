@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.albertoborsetta.formscanner.api.commons.Constants;
+
 /**
  * The <code>FormPoint</code> class represents a point into the scanned form.
  * <p>
