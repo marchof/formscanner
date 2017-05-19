@@ -524,6 +524,12 @@ public class FormTemplate {
 		this(name, null);
 	}
 
+	/**
+	 * Sets the already used group names
+	 * 
+	 * @author Alberto Borsetta
+	 * @param groupNamesList
+	 */
 	public void setUsedGroupNames(ArrayList<String> groupNamesList) {
 		usedGroupNames = groupNamesList;
 	}
@@ -1247,9 +1253,8 @@ public class FormTemplate {
 
 			for (String barcodeName : barcodeNames) {
 				FormArea area = barcodeFields.get(barcodeName);
-				BufferedImage subImage = getAreaImage(image, area);
 				Future<HashMap<String, FormArea>> future = threadPool
-						.submit(new BarcodeDetector(this, area, subImage));
+						.submit(new BarcodeDetector(this, area, image));
 				barcodeDetectorThreads.add(future);
 			}
 
@@ -1266,24 +1271,6 @@ public class FormTemplate {
 			}
 			threadPool.shutdown();
 		}
-	}
-
-	private static BufferedImage getAreaImage(BufferedImage image, FormArea area) {
-		int minX = (int) Math.min(area.getCorner(Corners.TOP_LEFT).getX(), area
-				.getCorner(Corners.BOTTOM_LEFT).getX());
-		int minY = (int) Math.min(area.getCorner(Corners.TOP_LEFT).getY(), area
-				.getCorner(Corners.TOP_RIGHT).getY());
-		int maxX = (int) Math.max(
-				area.getCorner(Corners.TOP_RIGHT).getX(),
-				area.getCorner(Corners.BOTTOM_RIGHT).getX());
-		int maxY = (int) Math.max(
-				area.getCorner(Corners.BOTTOM_LEFT).getY(),
-				area.getCorner(Corners.BOTTOM_RIGHT).getY());
-		int subImageWidth = maxX - minX;
-		int hsubImageHeight = maxY - minY;
-		BufferedImage subImage = image.getSubimage(
-				minX, minY, subImageWidth, hsubImageHeight);
-		return subImage;
 	}
 
 	/**
@@ -1419,6 +1406,12 @@ public class FormTemplate {
 		this.crop = crop;
 	}
 
+	/**
+	 * Return the already used group names
+	 *  
+	 * @author Alberto Borsetta
+	 * @return the list of the already used names for groups
+	 */
 	public ArrayList<String> getUsedGroupNames() {
 		return usedGroupNames;
 	}
