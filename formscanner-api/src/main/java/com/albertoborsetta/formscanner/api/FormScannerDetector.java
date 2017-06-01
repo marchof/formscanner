@@ -77,7 +77,12 @@ public abstract class FormScannerDetector {
                 int xji = xi - HALF_WINDOW_SIZE + j;
                 int yji = yi - HALF_WINDOW_SIZE + i;
                 int index = (yji * subImageWidth) + xji;
-                if ((rgbArray[index] & (0xFF)) < threshold) {
+                
+                int red = (rgbArray[index] >> 16) & (0xFF);
+                int green = (rgbArray[index] >> 8) & (0xFF);
+                int blue = rgbArray[index] & (0xFF);                
+                int pixel = Math.max(red, Math.max(green, blue));                
+                if (pixel < threshold) {
                     blacks++;
                 }
             }

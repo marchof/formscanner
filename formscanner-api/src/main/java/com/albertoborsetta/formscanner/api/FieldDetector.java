@@ -90,7 +90,11 @@ public class FieldDetector extends FormScannerDetector implements Callable<HashM
 
 		image.getRGB(xCoord - halfSize, yCoord - halfSize, size, size, rgbArray, 0, size);
 		for (int i = 0; i < total; i++) {
-			if ((rgbArray[i] & (0xFF)) < threshold) {
+			int red = (rgbArray[i] >> 16) & (0xFF);
+            int green = (rgbArray[i] >> 8) & (0xFF);
+            int blue = rgbArray[i] & (0xFF);       
+            int pixel = Math.max(red, Math.max(green, blue));
+			if (pixel < threshold) {
 				count++;
 			}
 		}

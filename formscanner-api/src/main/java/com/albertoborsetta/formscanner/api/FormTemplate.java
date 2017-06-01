@@ -528,7 +528,7 @@ public class FormTemplate {
 	 * Sets the already used group names
 	 * 
 	 * @author Alberto Borsetta
-	 * @param groupNamesList
+	 * @param groupNamesList list of used group names
 	 */
 	public void setUsedGroupNames(ArrayList<String> groupNamesList) {
 		usedGroupNames = groupNamesList;
