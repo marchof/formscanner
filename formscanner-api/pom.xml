@@ -1,14 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- <parent> -->
-	<!-- <artifactId>formscanner</artifactId> -->
 	<groupId>com.albertoborsetta</groupId>
-	<version>1.1.4-SNAPSHOT</version>
-	<!-- </parent> -->
+	<version>1.1.4</version>
 	<artifactId>formscanner-api</artifactId>
 	<packaging>jar</packaging>
 	<name>FormScanner - API</name>
+	<description>FormScanner - Free OMR Software</description>
+	<url>http://www.formscanner.org</url>
+	<developers>
+		<developer>
+			<id>aborsetta</id>
+			<name>Alberto Borsetta</name>
+			<email>alberto.borsetta@gmail.com</email>
+			<organization>Alberto Borsetta</organization>
+			<organizationUrl>https://albertoborsetta.com</organizationUrl>
+			<roles>
+				<role>Project-Administrator</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>GNU General Public License version 3.0 (GPLv3)</name>
+			<url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
+			<distribution>repo</distribution>
+			<comments>Sponsored by Free Software Foundation</comments>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>bugzilla</system>
+		<url>http://www.bugheaven.com/bugzilla/FormScanner/</url>
+	</issueManagement>
+	<scm>
+		<connection>hg clone http://hg.code.sf.net/p/formscanner/code formscanner-code</connection>
+		<developerConnection>hg clone http://hg.code.sf.net/p/formscanner/code formscanner-code</developerConnection>
+		<url>hg clone http://hg.code.sf.net/p/formscanner/code formscanner-code</url>
+	</scm>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -137,6 +167,6 @@
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
 		<maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
 	</properties>
 </project>

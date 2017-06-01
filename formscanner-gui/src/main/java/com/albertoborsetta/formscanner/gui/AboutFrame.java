@@ -137,9 +137,12 @@ public class AboutFrame extends InternalFrame {
 		text.setContentType("text/html");
 		text.setOpaque(true);
 		text.addHyperlinkListener(aboutFrameController);
-		text.setText(
-				StringUtils.replace(FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.ABOUT_TEXT),
-						FormScannerConstants.VERSION_KEY, FormScannerConstants.VERSION));
+		String aboutText = FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.ABOUT_TEXT);
+		aboutText = StringUtils.replace(aboutText,
+				FormScannerConstants.VERSION_KEY, FormScannerConstants.VERSION);
+		aboutText = StringUtils.replace(aboutText,
+				FormScannerConstants.COPYRIGHT_KEY, FormScannerConstants.COPYRIGHT);
+		text.setText(aboutText);
 		text.setEditable(false);
 		text.getCaret().setDot(0);
 
