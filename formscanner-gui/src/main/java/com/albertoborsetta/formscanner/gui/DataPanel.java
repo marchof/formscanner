@@ -121,7 +121,7 @@ public class DataPanel extends JSplitPane {
 		public boolean isCellEditable(int row, int col) {
 			if (isTemplateTable)
 				return col <= 1;
-			else 
+			else
 				return col == 0;
 		}
 
@@ -309,11 +309,11 @@ public class DataPanel extends JSplitPane {
 
 	private JTable createFieldsTable() {
 		DataTableModel fieldsTableModel = new DataTableModel(true);
-		
+
 		fieldsGridController = FieldsGridController.getInstance(model);
 		fieldsGridController.add(this);
 		fieldsTableModel.addTableModelListener(fieldsGridController);
-		
+
 		JTable table = new JTable(fieldsTableModel);
 
 		for (FieldsTableColumn tableColumn : FieldsTableColumn.values()) {
@@ -348,8 +348,8 @@ public class DataPanel extends JSplitPane {
 		HashMap<String, FormGroup> groups = model.getTemplate().getGroups();
 
 		for (Entry<String, FormGroup> group : groups.entrySet()) {
-			
-			String groupName = group.getKey().equals(FormScannerConstants.EMPTY_GROUP_NAME) ? "" : group.getKey();  
+
+			String groupName = group.getKey().equals(FormScannerConstants.EMPTY_GROUP_NAME) ? "" : group.getKey();
 
 			HashMap<String, FormQuestion> fields = group.getValue().getFields();
 			for (FormQuestion field : fields.values()) {
@@ -465,7 +465,7 @@ public class DataPanel extends JSplitPane {
 		// results available)
 
 		JPanel imagesToolBar = createImagesToolbar();
-		
+
 		JPanel imagesGridPanel = createImagesGridPanel();
 
 		scrollImagesGrid = new JScrollPane(imagesGridPanel);
@@ -501,42 +501,30 @@ public class DataPanel extends JSplitPane {
 
 		JToolBar clearToolBar = new ToolBarBuilder(orientation).withAlignmentY(Component.CENTER_ALIGNMENT)
 				.withAlignmentX(Component.LEFT_ALIGNMENT).add(clearImagesButton).build();
-		
-		startButton = new ButtonBuilder(orientation)
-				.withActionCommand(FormScannerConstants.ANALYZE_FILES_FIRST)
+
+		startButton = new ButtonBuilder(orientation).withActionCommand(FormScannerConstants.ANALYZE_FILES_FIRST)
+				.withActionListener(bottomPanelController)
+				.withToolTip(FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.ANALYZE_FILES_TOOLTIP))
+				.withIcon(FormScannerResources.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_ICON, 16))
+				.setEnabled(false).build();
+
+		startAllButton = new ButtonBuilder(orientation).withActionCommand(FormScannerConstants.ANALYZE_FILES_ALL)
 				.withActionListener(bottomPanelController)
 				.withToolTip(
-						FormScannerTranslation
-								.getTranslationFor(FormScannerTranslationKeys.ANALYZE_FILES_TOOLTIP))
-				.withIcon(
-						FormScannerResources
-								.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_ICON, 16))
+						FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.ANALYZE_FILES_ALL_TOOLTIP))
+				.withIcon(FormScannerResources.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_ALL_ICON, 16))
 				.setEnabled(false).build();
-		
-		startAllButton = new ButtonBuilder(orientation)
-				.withActionCommand(FormScannerConstants.ANALYZE_FILES_ALL)
+
+		reloadButton = new ButtonBuilder(orientation).withActionCommand(FormScannerConstants.ANALYZE_FILES_CURRENT)
 				.withActionListener(bottomPanelController)
-				.withToolTip(
-						FormScannerTranslation
-								.getTranslationFor(FormScannerTranslationKeys.ANALYZE_FILES_ALL_TOOLTIP))
-				.withIcon(
-						FormScannerResources
-								.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_ALL_ICON, 16))
+				.withToolTip(FormScannerTranslation
+						.getTranslationFor(FormScannerTranslationKeys.ANALYZE_FILES_CURRENT_TOOLTIP))
+				.withIcon(FormScannerResources.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_CURRENT_ICON, 16))
 				.setEnabled(false).build();
-		
-		reloadButton = new ButtonBuilder(orientation)
-				.withActionCommand(FormScannerConstants.ANALYZE_FILES_CURRENT)
-				.withActionListener(bottomPanelController)
-				.withToolTip(
-						FormScannerTranslation
-								.getTranslationFor(FormScannerTranslationKeys.ANALYZE_FILES_CURRENT_TOOLTIP))
-				.withIcon(
-						FormScannerResources
-								.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_CURRENT_ICON, 16))
-				.setEnabled(false).build();
-		
+
 		JToolBar editToolBar = new ToolBarBuilder(orientation).withAlignmentY(Component.CENTER_ALIGNMENT)
-				.withAlignmentX(Component.LEFT_ALIGNMENT).add(startButton).add(startAllButton).add(reloadButton).build();
+				.withAlignmentX(Component.LEFT_ALIGNMENT).add(startButton).add(startAllButton).add(reloadButton)
+				.build();
 
 		PanelBuilder panel = new PanelBuilder(orientation);
 
@@ -631,15 +619,15 @@ public class DataPanel extends JSplitPane {
 
 	private JTable createImagesTable() {
 		DataTableModel imagesTableModel = new DataTableModel(false);
-		
+
 		imagesGridController = ImagesGridController.getInstance(model);
 		imagesGridController.add(this);
 		imagesTableModel.addTableModelListener(imagesGridController);
-		
+
 		JTable table = new JTable(imagesTableModel);
-		
+
 		imagesTableModel.addColumn(FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.FILENAME));
-		
+
 		if (isLoaded) {
 
 			FormTemplate template = model.getTemplate();
@@ -697,14 +685,14 @@ public class DataPanel extends JSplitPane {
 
 		int col = 1;
 		if (isLoaded) {
-			
+
 			FormTemplate template = model.getTemplate();
-			
+
 			ArrayList<String> groupNames = new ArrayList<>(template.getGroups().keySet());
-			
+
 			for (String groupName : groupNames) {
 				FormGroup group = template.getGroup(groupName);
-				
+
 				ArrayList<String> fieldNames = new ArrayList<>(group.getFields().keySet());
 				ArrayList<String> areaNames = new ArrayList<>(group.getAreas().keySet());
 				col = col + fieldNames.size() + areaNames.size();
@@ -712,14 +700,14 @@ public class DataPanel extends JSplitPane {
 		}
 
 		for (String fileName : fileList) {
-		
+
 			Object[] values = new Object[col];
-		
+
 			values[0] = fileName;
-			for (int j=1; j<col; j++) {
+			for (int j = 1; j < col; j++) {
 				values[j] = null;
 			}
-			
+
 			tableModel.addRow(values);
 		}
 	}
@@ -734,7 +722,7 @@ public class DataPanel extends JSplitPane {
 
 	public String getSelectedFileName() {
 		int selectedRow = (imagesTable.getSelectedRow()) < 0 ? 0 : imagesTable.getSelectedRow();
-			
+
 		return (String) imagesTable.getValueAt(selectedRow, 0);
 	}
 
@@ -751,13 +739,15 @@ public class DataPanel extends JSplitPane {
 	}
 
 	public boolean selectNextImage() {
-		
+
 		int nextRow = imagesTable.getSelectedRow() + 1;
-		
-//		imagesTable.getSelectionModel().clearSelection();
-		imagesTable.getSelectionModel().setSelectionInterval(nextRow+1, nextRow);
-		
-		return nextRow > imagesTable.getRowCount();
-			
+
+		if (nextRow < imagesTable.getRowCount()) {
+			// imagesTable.getSelectionModel().clearSelection();
+			imagesTable.getSelectionModel().setSelectionInterval(nextRow + 1, nextRow);
+		}
+
+		return nextRow > (imagesTable.getRowCount() - 1);
+
 	}
 }

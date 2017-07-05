@@ -90,6 +90,8 @@ public class FormScannerWorkspace extends JFrame {
 				.add(dataPanel.getPanelControls(), BorderLayout.SOUTH).add(dataPanel, BorderLayout.CENTER).build();
 
 		optionsPanel = new OptionsPanel(model, desktopPanel);
+		optionsPanel.setResizeWeight(0.2);
+		optionsPanel.setDividerLocation(0.25);
 
 		toolBar = new ToolBar(model);
 		toolBar.setup();
@@ -131,7 +133,7 @@ public class FormScannerWorkspace extends JFrame {
 			frame.dispose();
 		}
 		setDefaultControllersEnabled();
-		model.resetFirstPass();
+//		model.resetFirstPass();
 	}
 
 	public void setDefaultControllersEnabled() {

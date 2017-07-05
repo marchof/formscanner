@@ -308,7 +308,7 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 				showTemporaryPoints((Graphics2D) g);
 				showPoints((Graphics2D) g);
 				showArea((Graphics2D) g);
-				showCorners((Graphics2D) g);
+//				showCorners((Graphics2D) g);
 			}
 			showCrop((Graphics2D) g);
 		}
@@ -361,7 +361,7 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 			if (!StringUtils.isEmpty(area.getText())) {
 				g.setColor(Color.RED);
 				AffineTransform orig = g.getTransform();
-				g.rotate(template.getRotation());
+//				g.rotate(template.getRotation());
 
 				g.setFont(FormScannerFont.getFont((int) (marker * zoom)));
 				int textHeight = (int) g.getFontMetrics().getStringBounds(area.getText(), g).getHeight();
@@ -409,13 +409,13 @@ public class ImageFrame extends InternalFrame implements ScrollableView, ImageVi
 			}
 		}
 
-		private void showCorners(Graphics2D g) {
-			HashMap<Corners, FormPoint> corners = template.getCorners();
-			if (corners.isEmpty()) {
-				return;
-			}
-			showArea(g, corners, Color.GREEN);
-		}
+//		private void showCorners(Graphics2D g) {
+//			HashMap<Corners, FormPoint> corners = template.getCorners();
+//			if (corners.isEmpty()) {
+//				return;
+//			}
+//			showArea(g, corners, Color.GREEN);
+//		}
 
 		private void showArea(Graphics2D g, HashMap<Corners, FormPoint> points, Color color) {
 			g.setColor(color);

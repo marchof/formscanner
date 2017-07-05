@@ -57,13 +57,13 @@ public class DataPanelController implements ActionListener {
 			bottomPanel.setupFieldsTable();
 			bottomPanel.setupImagesTable();
 			break;
-		case LOAD_TEMPLATE:
+		case CREATE_TEMPLATE:
 			formScannerModel.loadTemplate();
 			bottomPanel.isTemplateLoaded(true);
 			bottomPanel.setupFieldsTable();
 //			bottomPanel.enableEditTemplate();
 			break;
-		case USE_TEMPLATE:
+		case LOAD_TEMPLATE:
 			formScannerModel.openTemplate();
 			bottomPanel.setTemplateData();
 			bottomPanel.isTemplateLoaded(true);

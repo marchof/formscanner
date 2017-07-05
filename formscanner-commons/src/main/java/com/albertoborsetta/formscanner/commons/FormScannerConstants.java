@@ -25,8 +25,8 @@ public class FormScannerConstants extends Constants {
 	public static final String ANALYZE_FILES_ALL = "ANALYZE_FILES_ALL";
 	public static final String ANALYZE_FILES_FIRST = "ANALYZE_FILES_FIRST";
 	public static final String ANALYZE_FILES_CURRENT = "ANALYZE_FILES_CURRENT";
-	public static final String CREATE_TEMPLATE = "LOAD_TEMPLATE";
-	public static final String LOAD_TEMPLATE = "USE_TEMPLATE";
+	public static final String CREATE_TEMPLATE = "CREATE_TEMPLATE";
+	public static final String LOAD_TEMPLATE = "LOAD_TEMPLATE";
 	public static final String EDIT_TEMPLATE = "EDIT_TEMPLATE";
 	public static final String CONFIRM = "CONFIRM";
 	public static final String CANCEL = "CANCEL";
@@ -227,7 +227,7 @@ public class FormScannerConstants extends Constants {
 		SAVE_RESULTS,
 		ANALYZE_FILES_FIRST,
 		LOAD_TEMPLATE,
-		USE_TEMPLATE,
+		CREATE_TEMPLATE,
 		EDIT_TEMPLATE,
 		CONFIRM,
 		CANCEL,
@@ -258,7 +258,7 @@ public class FormScannerConstants extends Constants {
 		CLEAR_TEMPLATE,
 		OPEN_TEMPLATE_IMAGE,
 		CLEAR_IMAGES,
-SHAPE_TYPE,
+		SHAPE_TYPE,
 		FONT_TYPE,
 		FONT_SIZE,
 		LOOK_AND_FEEL,

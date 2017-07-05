@@ -1,27 +1,22 @@
 package com.albertoborsetta.formscanner.api;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.Map.Entry;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.Future;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.codec.binary.Base64;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
-import javax.naming.InitialContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,10 +37,18 @@ import com.albertoborsetta.formscanner.api.commons.Constants.CornerType;
 import com.albertoborsetta.formscanner.api.commons.Constants.Corners;
 import com.albertoborsetta.formscanner.api.commons.Constants.FieldType;
 import com.albertoborsetta.formscanner.api.commons.Constants.ShapeType;
-import com.albertoborsetta.formscanner.api.exceptions.FormScannerException;
+//import com.albertoborsetta.formscanner.api.exceptions.FormScannerException;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
+//import boofcv.abst.feature.associate.AssociateDescription;
+//import boofcv.abst.feature.associate.ScoreAssociation;
+//import boofcv.abst.feature.detdesc.DetectDescribePoint;
+//import boofcv.abst.feature.detect.interest.ConfigFastHessian;
+//import boofcv.factory.feature.associate.FactoryAssociation;
+//import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
+//import boofcv.struct.image.GrayF32;
+
+//import java.util.concurrent.Callable;
+//import java.util.concurrent.ExecutionException;
 
 /**
  * The <code>FormTemplate</code> class represents the scanned form.
@@ -194,24 +197,24 @@ import java.util.concurrent.ExecutionException;
 public final class FormTemplate {
 
 	private HashMap<String, FormGroup> groups;
-	private HashMap<Corners, FormPoint> corners;
+//	private HashMap<Corners, FormPoint> corners;
 
 	private ArrayList<FormPoint> pointList;
 	private ArrayList<FormArea> areaList;
 
-	private CornerType cornerType;
+//	private CornerType cornerType;
 	private ShapeType shape;
 	private FormTemplate template;
 	private String version = null;
-	private double rotation;
-	private double diagonal;
+//	private double rotation;
+//	private double diagonal;
 	private int height;
 	private int width;
 	private Integer threshold;
 	private Integer density;
 	private Integer size;
 	private boolean isGroupsEnabled = false;
-	private HashMap<String, Integer> crop = new HashMap<>();
+//	private HashMap<String, Integer> crop = new HashMap<>();
 	private ArrayList<String> usedGroupNames = new ArrayList<>();
 	private String imageName;
 	private BufferedImage image;
@@ -239,33 +242,33 @@ public final class FormTemplate {
 			templateElement.appendChild(imageElement);
 
 			// crop element
-			Element cropElement = doc.createElement("crop");
-			HashMap<String, Integer> crop = template.getCrop();
-			cropElement.setAttribute("top", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.TOP)));
-			cropElement.setAttribute("left", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.LEFT)));
-			cropElement.setAttribute("right", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.RIGHT)));
-			cropElement.setAttribute("bottom", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.BOTTOM)));
-			templateElement.appendChild(cropElement);
+//			Element cropElement = doc.createElement("crop");
+//			HashMap<String, Integer> crop = template.getCrop();
+//			cropElement.setAttribute("top", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.TOP)));
+//			cropElement.setAttribute("left", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.LEFT)));
+//			cropElement.setAttribute("right", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.RIGHT)));
+//			cropElement.setAttribute("bottom", crop.isEmpty() ? "0" : String.valueOf(crop.get(Constants.BOTTOM)));
+//			templateElement.appendChild(cropElement);
 
 			// rotation element
-			Element rotationElement = doc.createElement("rotation");
-			rotationElement.setAttribute("angle", String.valueOf(template.getRotation()));
-			templateElement.appendChild(rotationElement);
+//			Element rotationElement = doc.createElement("rotation");
+//			rotationElement.setAttribute("angle", String.valueOf(template.getRotation()));
+//			templateElement.appendChild(rotationElement);
 
 			// corners element
-			Element cornersElement = doc.createElement("corners");
-			if (template.getCornerType() != null) {
-				cornersElement.setAttribute("type", template.getCornerType().getName());
-			}
-			templateElement.appendChild(cornersElement);
+//			Element cornersElement = doc.createElement("corners");
+//			if (template.getCornerType() != null) {
+//				cornersElement.setAttribute("type", template.getCornerType().getName());
+//			}
+//			templateElement.appendChild(cornersElement);
 
 			// corner elements
-			for (Entry<Corners, FormPoint> corner : template.getCorners().entrySet()) {
-				Element cornerElement = doc.createElement("corner");
-				cornerElement.setAttribute("position", corner.getKey().getName());
-				cornerElement.appendChild(corner.getValue().getXml(doc));
-				cornersElement.appendChild(cornerElement);
-			}
+//			for (Entry<Corners, FormPoint> corner : template.getCorners().entrySet()) {
+//				Element cornerElement = doc.createElement("corner");
+//				cornerElement.setAttribute("position", corner.getKey().getName());
+//				cornerElement.appendChild(corner.getValue().getXml(doc));
+//				cornersElement.appendChild(cornerElement);
+//			}
 
 			// fields element
 			Element fieldsElement = doc.createElement("fields");
@@ -321,21 +324,21 @@ public final class FormTemplate {
 			Element imageElement = (Element) templateElement.getElementsByTagName("image").item(0);
 			template.setImageName(imageElement.getAttribute("name"));
 
-			Element rotationElement = (Element) templateElement.getElementsByTagName("rotation").item(0);
-			template.setRotation(Double.parseDouble(rotationElement.getAttribute("angle")));
+//			Element rotationElement = (Element) templateElement.getElementsByTagName("rotation").item(0);
+//			template.setRotation(Double.parseDouble(rotationElement.getAttribute("angle")));
 
-			Element cropElement = (Element) templateElement.getElementsByTagName("crop").item(0);
-			template.setCrop(Integer.parseInt((cropElement != null) ? cropElement.getAttribute("top") : "0"),
-					Integer.parseInt((cropElement != null) ? cropElement.getAttribute("left") : "0"),
-					Integer.parseInt((cropElement != null) ? cropElement.getAttribute("right") : "0"),
-					Integer.parseInt((cropElement != null) ? cropElement.getAttribute("bottom") : "0"));
+//			Element cropElement = (Element) templateElement.getElementsByTagName("crop").item(0);
+//			template.setCrop(Integer.parseInt((cropElement != null) ? cropElement.getAttribute("top") : "0"),
+//					Integer.parseInt((cropElement != null) ? cropElement.getAttribute("left") : "0"),
+//					Integer.parseInt((cropElement != null) ? cropElement.getAttribute("right") : "0"),
+//					Integer.parseInt((cropElement != null) ? cropElement.getAttribute("bottom") : "0"));
 
-			Element cornersElement = (Element) templateElement.getElementsByTagName("corners").item(0);
-			template.setCornerType(StringUtils.isNotBlank(cornersElement.getAttribute("type"))
-					? CornerType.valueOf(cornersElement.getAttribute("type")) : CornerType.ROUND);
-			addCorners(template, cornersElement);
+//			Element cornersElement = (Element) templateElement.getElementsByTagName("corners").item(0);
+//			template.setCornerType(StringUtils.isNotBlank(cornersElement.getAttribute("type"))
+//					? CornerType.valueOf(cornersElement.getAttribute("type")) : CornerType.ROUND);
+//			addCorners(template, cornersElement);
 
-			template.calculateDiagonal();
+//			template.calculateDiagonal();
 
 			Element fieldsElement = (Element) templateElement.getElementsByTagName("fields").item(0);
 
@@ -380,16 +383,16 @@ public final class FormTemplate {
 			return area;
 		}
 
-		private static void addCorners(FormTemplate template, Element element) {
-			NodeList cornerList = element.getElementsByTagName("corner");
-			for (int i = 0; i < cornerList.getLength(); i++) {
-				Element cornerElement = (Element) cornerList.item(i);
-				String position = cornerElement.getAttribute("position");
-				cornerElement.getElementsByTagName("point");
-				FormPoint corner = getPoint(cornerElement);
-				template.setCorner(Corners.valueOf(position), corner);
-			}
-		}
+//		private static void addCorners(FormTemplate template, Element element) {
+//			NodeList cornerList = element.getElementsByTagName("corner");
+//			for (int i = 0; i < cornerList.getLength(); i++) {
+//				Element cornerElement = (Element) cornerList.item(i);
+//				String position = cornerElement.getAttribute("position");
+//				cornerElement.getElementsByTagName("point");
+//				FormPoint corner = getPoint(cornerElement);
+//				template.setCorner(Corners.valueOf(position), corner);
+//			}
+//		}
 
 		private static FormPoint getPoint(Element element) {
 			Element pointElement = (Element) element.getElementsByTagName("point").item(0);
@@ -509,6 +512,12 @@ public final class FormTemplate {
 		this.imageName = name;
 	}
 
+	/**
+	 * Sets the already used group names
+	 * 
+	 * @author Alberto Borsetta
+	 * @param groupNamesList
+	 */
 	public void setUsedGroupNames(ArrayList<String> groupNamesList) {
 		usedGroupNames = groupNamesList;
 	}
@@ -556,9 +565,9 @@ public final class FormTemplate {
 	 *            the corner type
 	 * @see CornerType
 	 */
-	public void setCornerType(CornerType cornerType) {
-		this.cornerType = cornerType;
-	}
+//	public void setCornerType(CornerType cornerType) {
+//		this.cornerType = cornerType;
+//	}
 
 	/**
 	 * Returns the corner type of the template.
@@ -566,9 +575,9 @@ public final class FormTemplate {
 	 * @author Alberto Borsetta
 	 * @return the corner type
 	 */
-	public CornerType getCornerType() {
-		return cornerType;
-	}
+//	public CornerType getCornerType() {
+//		return cornerType;
+//	}
 
 	/**
 	 * Sets the version of the template.
@@ -627,10 +636,10 @@ public final class FormTemplate {
 			imageName = imageFile.getName();
 		}
 
-		corners = new HashMap<>();
-		setDefaultCornerPosition();
-		calculateDiagonal();
-		rotation = 0;
+//		corners = new HashMap<>();
+//		setDefaultCornerPosition();
+//		calculateDiagonal();
+//		rotation = 0;
 		pointList = new ArrayList<>();
 		areaList = new ArrayList<>();
 		groups = new HashMap<>();
@@ -653,8 +662,8 @@ public final class FormTemplate {
 	}
 
 	private void presetFromTemplate() {
-		cornerType = template.getCornerType();
-		crop = template.getCrop();
+//		cornerType = template.getCornerType();
+//		crop = template.getCrop();
 		density = template.getDensity();
 		shape = template.getShapeType();
 		size = template.getSize();
@@ -667,38 +676,38 @@ public final class FormTemplate {
 	 *
 	 * @author Alberto Borsetta
 	 */
-	public void calculateDiagonal() {
-		diagonal = (corners.get(Corners.TOP_LEFT).dist2(corners.get(Corners.BOTTOM_RIGHT))
-				+ corners.get(Corners.TOP_RIGHT).dist2(corners.get(Corners.BOTTOM_LEFT))) / 2;
-	}
+//	public void calculateDiagonal() {
+//		diagonal = (corners.get(Corners.TOP_LEFT).dist2(corners.get(Corners.BOTTOM_RIGHT))
+//				+ corners.get(Corners.TOP_RIGHT).dist2(corners.get(Corners.BOTTOM_LEFT))) / 2;
+//	}
 
-	private void setDefaultCornerPosition() {
-		int x;
-		int y;
-
-		for (Corners position : Corners.values()) {
-			x = 0;
-			y = 0;
-
-			switch (position) {
-			case TOP_RIGHT:
-				x = width;
-				break;
-			case BOTTOM_LEFT:
-				y = height;
-				break;
-			case BOTTOM_RIGHT:
-				x = width;
-				y = height;
-				break;
-			default:
-				break;
-			}
-
-			FormPoint corner = new FormPoint(x, y);
-			corners.put(position, corner);
-		}
-	}
+//	private void setDefaultCornerPosition() {
+//		int x;
+//		int y;
+//
+//		for (Corners position : Corners.values()) {
+//			x = 0;
+//			y = 0;
+//
+//			switch (position) {
+//			case TOP_RIGHT:
+//				x = width;
+//				break;
+//			case BOTTOM_LEFT:
+//				y = height;
+//				break;
+//			case BOTTOM_RIGHT:
+//				x = width;
+//				y = height;
+//				break;
+//			default:
+//				break;
+//			}
+//
+//			FormPoint corner = new FormPoint(x, y);
+//			corners.put(position, corner);
+//		}
+//	}
 
 	/**
 	 * Returns the group identified by the given name.
@@ -824,10 +833,10 @@ public final class FormTemplate {
 	 * @see Corners
 	 * @see FormPoint
 	 */
-	public void setCorners(HashMap<Corners, FormPoint> corners) {
-		this.corners = corners;
-		calculateRotation();
-	}
+//	public void setCorners(HashMap<Corners, FormPoint> corners) {
+//		this.corners = corners;
+//		calculateRotation();
+//	}
 
 	/**
 	 * Sets the given corner into the FormTemplate object.
@@ -840,11 +849,11 @@ public final class FormTemplate {
 	 * @see Corners
 	 * @see FormPoint
 	 */
-	public void setCorner(Corners corner, FormPoint point) {
-		corners.put(corner, point);
-		calculateRotation();
-		calculateDiagonal();
-	}
+//	public void setCorner(Corners corner, FormPoint point) {
+//		corners.put(corner, point);
+//		calculateRotation();
+//		calculateDiagonal();
+//	}
 
 	/**
 	 * Returns the corners of the FormTemplate object.
@@ -854,9 +863,9 @@ public final class FormTemplate {
 	 * @see Corners
 	 * @see FormPoint
 	 */
-	public HashMap<Corners, FormPoint> getCorners() {
-		return corners;
-	}
+//	public HashMap<Corners, FormPoint> getCorners() {
+//		return corners;
+//	}
 
 	/**
 	 * Returns the rotation of the FormTemplate object.
@@ -864,9 +873,9 @@ public final class FormTemplate {
 	 * @author Alberto Borsetta
 	 * @return the rotation of the FormTemplate object
 	 */
-	public double getRotation() {
-		return rotation;
-	}
+//	public double getRotation() {
+//		return rotation;
+//	}
 
 	/**
 	 * Sets the rotation of the FormTemplate object.
@@ -875,9 +884,9 @@ public final class FormTemplate {
 	 * @param rotation
 	 *            the new rotation of the FormTemplate object
 	 */
-	public void setRotation(double rotation) {
-		this.rotation = rotation;
-	}
+//	public void setRotation(double rotation) {
+//		this.rotation = rotation;
+//	}
 
 	/**
 	 * Returns the points for the fields of the FormTemplate object.
@@ -954,9 +963,9 @@ public final class FormTemplate {
 	 *            the corner
 	 * @return the point of the corner
 	 */
-	public FormPoint getCorner(Corners corner) {
-		return corners.get(corner);
-	}
+//	public FormPoint getCorner(Corners corner) {
+//		return corners.get(corner);
+//	}
 
 	/**
 	 * Returns the diagonal of the FormTemplate object.
@@ -964,9 +973,9 @@ public final class FormTemplate {
 	 * @author Alberto Borsetta
 	 * @return the diagonal of the FormTemplate object.
 	 */
-	public double getDiagonal() {
-		return diagonal;
-	}
+//	public double getDiagonal() {
+//		return diagonal;
+//	}
 
 	/**
 	 * Sets the diagonal to the FormTemplate object.
@@ -975,9 +984,9 @@ public final class FormTemplate {
 	 * @param diag
 	 *            the new diagonal
 	 */
-	public void setDiagonal(double diag) {
-		diagonal = diag;
-	}
+//	public void setDiagonal(double diag) {
+//		diagonal = diag;
+//	}
 
 	/**
 	 * Find the corners of the FormTemplate object.
@@ -1008,49 +1017,49 @@ public final class FormTemplate {
 	 *             throws FormScannerException
 	 * @see CornerType
 	 */
-	public void findCorners(int threshold, int density, CornerType cornerType, HashMap<String, Integer> crop)
-			throws FormScannerException {
-		Integer top = crop.get(Constants.TOP);
-		Integer bottom = crop.get(Constants.BOTTOM);
-		Integer left = crop.get(Constants.LEFT);
-		Integer right = crop.get(Constants.RIGHT);
-
-		width = image.getWidth() - (left + right);
-		height = image.getHeight() - (top + bottom);
-
-		BufferedImage croppedImage = image.getSubimage(left, top, width, height);
-
-		int cores = Runtime.getRuntime().availableProcessors();
-
-		//		Only for debug
-		//		cores = 1;
-
-		ExecutorService threadPool = Executors.newFixedThreadPool(--cores <= 0 ? 1 : cores);
-		HashMap<Corners, Future<FormPoint>> cornerDetectorThreads = new HashMap<>();
-
-		for (Corners position : Corners.values()) {
-			Future<FormPoint> future = threadPool
-					.submit(new CornerDetector(threshold, density, position, croppedImage, cornerType));
-			cornerDetectorThreads.put(position, future);
-		}
-
-		for (Corners position : Corners.values()) {
-			try {
-				FormPoint corner = cornerDetectorThreads.get(position).get();
-				corner.setX(corner.getX() + left);
-				corner.setY(corner.getY() + top);
-				if (corner != null) {
-					corners.put(position, corner);
-				}
-			} catch (InterruptedException | ExecutionException e) {
-				throw new FormScannerException(e.getCause());
-			}
-		 }
-
-		calculateDiagonal();
-		calculateRotation();
-		threadPool.shutdown();
-	}
+//	public void findCorners(int threshold, int density, CornerType cornerType, HashMap<String, Integer> crop)
+//			throws FormScannerException {
+//		Integer top = crop.get(Constants.TOP);
+//		Integer bottom = crop.get(Constants.BOTTOM);
+//		Integer left = crop.get(Constants.LEFT);
+//		Integer right = crop.get(Constants.RIGHT);
+//
+//		width = image.getWidth() - (left + right);
+//		height = image.getHeight() - (top + bottom);
+//
+//		BufferedImage croppedImage = image.getSubimage(left, top, width, height);
+//
+//		int cores = Runtime.getRuntime().availableProcessors();
+//
+//		//		Only for debug
+//		//		cores = 1;
+//
+//		ExecutorService threadPool = Executors.newFixedThreadPool(--cores <= 0 ? 1 : cores);
+//		HashMap<Corners, Future<FormPoint>> cornerDetectorThreads = new HashMap<>();
+//
+//		for (Corners position : Corners.values()) {
+//			Future<FormPoint> future = threadPool
+//					.submit(new CornerDetector(threshold, density, position, croppedImage, cornerType));
+//			cornerDetectorThreads.put(position, future);
+//		}
+//
+//		for (Corners position : Corners.values()) {
+//			try {
+//				FormPoint corner = cornerDetectorThreads.get(position).get();
+//				corner.setX(corner.getX() + left);
+//				corner.setY(corner.getY() + top);
+//				if (corner != null) {
+//					corners.put(position, corner);
+//				}
+//			} catch (InterruptedException | ExecutionException e) {
+//				throw new FormScannerException(e.getCause());
+//			}
+//		 }
+//
+//		calculateDiagonal();
+//		calculateRotation();
+//		threadPool.shutdown();
+//	}
 
 	/**
 	 * Find the filled points of the FormTemplate object.
@@ -1079,52 +1088,52 @@ public final class FormTemplate {
 	 * @throws FormScannerException
 	 *             throws FormScannerException
 	 */
-	public void findPoints(int threshold, int density, int size) throws FormScannerException {
-		height = image.getHeight();
-		width = image.getWidth();
-		int cores = Runtime.getRuntime().availableProcessors();
-//		Only for debug
-//		cores = 1;
+//	public void findPoints(int threshold, int density, int size) throws FormScannerException {
+//		height = image.getHeight();
+//		width = image.getWidth();
+//		int cores = Runtime.getRuntime().availableProcessors();
+////		Only for debug
+////		cores = 1;
+//
+//		HashMap<String, FormGroup> templateGroups = template.getGroups();
+//		for (Entry<String, FormGroup> templateGroup : templateGroups.entrySet()) {
+//			ExecutorService threadPool = Executors.newFixedThreadPool(--cores <= 0 ? 1 : cores);
+//			HashSet<Future<HashMap<String, FormQuestion>>> fieldDetectorThreads = new HashSet<>();
+//
+//			HashMap<String, FormQuestion> templateFields = templateGroup.getValue().getFields();
+//			ArrayList<String> fieldNames = new ArrayList<>(templateFields.keySet());
+//			Collections.sort(fieldNames);
+//
+//			for (String fieldName : fieldNames) {
+//				Future<HashMap<String, FormQuestion>> future = threadPool.submit(
+//						new FieldDetector(threshold, density, size, this, templateFields.get(fieldName), image));
+//				fieldDetectorThreads.add(future);
+//			}
+//
+//			for (Future<HashMap<String, FormQuestion>> thread : fieldDetectorThreads) {
+//				try {
+//					HashMap<String, FormQuestion> threadFields = thread.get();
+//					for (String fieldName : threadFields.keySet()) {
+//						FormQuestion field = threadFields.get(fieldName);
+//						addField(templateGroup.getKey(), fieldName, field);
+//					}
+//				} catch (InterruptedException | ExecutionException e) {
+//					throw new FormScannerException(e.getCause());
+//				}
+//			}
+//			threadPool.shutdown();
+//		}
+//	}
 
-		HashMap<String, FormGroup> templateGroups = template.getGroups();
-		for (Entry<String, FormGroup> templateGroup : templateGroups.entrySet()) {
-			ExecutorService threadPool = Executors.newFixedThreadPool(--cores <= 0 ? 1 : cores);
-			HashSet<Future<HashMap<String, FormQuestion>>> fieldDetectorThreads = new HashSet<>();
-
-			HashMap<String, FormQuestion> templateFields = templateGroup.getValue().getFields();
-			ArrayList<String> fieldNames = new ArrayList<>(templateFields.keySet());
-			Collections.sort(fieldNames);
-
-			for (String fieldName : fieldNames) {
-				Future<HashMap<String, FormQuestion>> future = threadPool.submit(
-						new FieldDetector(threshold, density, size, this, templateFields.get(fieldName), image));
-				fieldDetectorThreads.add(future);
-			}
-
-			for (Future<HashMap<String, FormQuestion>> thread : fieldDetectorThreads) {
-				try {
-					HashMap<String, FormQuestion> threadFields = thread.get();
-					for (String fieldName : threadFields.keySet()) {
-						FormQuestion field = threadFields.get(fieldName);
-						addField(templateGroup.getKey(), fieldName, field);
-					}
-				} catch (InterruptedException | ExecutionException e) {
-					throw new FormScannerException(e.getCause());
-				}
-			}
-			threadPool.shutdown();
-		}
-	}
-
-	private void calculateRotation() {
-		FormPoint topLeftPoint = corners.get(Corners.TOP_LEFT);
-		FormPoint topRightPoint = corners.get(Corners.TOP_RIGHT);
-
-		double dx = topRightPoint.getX() - topLeftPoint.getX();
-		double dy = topLeftPoint.getY() - topRightPoint.getY();
-
-		rotation = Math.atan(dy / dx);
-	}
+//	private void calculateRotation() {
+//		FormPoint topLeftPoint = corners.get(Corners.TOP_LEFT);
+//		FormPoint topRightPoint = corners.get(Corners.TOP_RIGHT);
+//
+//		double dx = topRightPoint.getX() - topLeftPoint.getX();
+//		double dy = topLeftPoint.getY() - topRightPoint.getY();
+//
+//		rotation = Math.atan(dy / dx);
+//	}
 
 	/**
 	 * Removes the nearest point to the given one from the FromTemplate object.
@@ -1172,9 +1181,9 @@ public final class FormTemplate {
 	 * @see FormPoint
 	 */
 	public void addPoint(FormPoint cursorPoint) {
-		FormPoint templateOrigin = template.getCorner(Corners.TOP_LEFT);
-		double templateRotation = template.getRotation();
-		double scale = Math.sqrt(diagonal / template.getDiagonal());
+//		FormPoint templateOrigin = template.getCorner(Corners.TOP_LEFT);
+//		double templateRotation = template.getRotation();
+//		double scale = Math.sqrt(diagonal / template.getDiagonal());
 		ArrayList<FormPoint> templatePoints = template.getFieldPoints();
 		FormPoint point;
 		if (!templatePoints.isEmpty()) {
@@ -1182,16 +1191,16 @@ public final class FormTemplate {
 			FormPoint nearestTemplatePoint = templatePoints.get(0);
 
 			point = nearestTemplatePoint.clone();
-			point.rotoTranslate(templateOrigin, templateRotation, true);
-			point.scale(scale);
-			point.rotoTranslate(corners.get(Corners.TOP_LEFT), rotation, false);
+//			point.rotoTranslate(templateOrigin, templateRotation, true);
+//			point.scale(scale);
+//			point.rotoTranslate(corners.get(Corners.TOP_LEFT), rotation, false);
 
 			double firstDistance = cursorPoint.dist2(nearestTemplatePoint);
 			for (FormPoint templatePoint : templatePoints) {
 				point = templatePoint.clone();
-				point.rotoTranslate(templateOrigin, templateRotation, true);
-				point.scale(scale);
-				point.rotoTranslate(corners.get(Corners.TOP_LEFT), rotation, false);
+//				point.rotoTranslate(templateOrigin, templateRotation, true);
+//				point.scale(scale);
+//				point.rotoTranslate(corners.get(Corners.TOP_LEFT), rotation, false);
 
 				double lastDistance = cursorPoint.dist2(point);
 				if (lastDistance < firstDistance) {
@@ -1272,56 +1281,42 @@ public final class FormTemplate {
 	 * @throws FormScannerException
 	 *             throws FormScannerException
 	 */
-	public void findAreas() throws FormScannerException {
-		height = image.getHeight();
-		width = image.getWidth();
-		int cores = Runtime.getRuntime().availableProcessors();
-//		Only for debug
-//		cores = 1;
-
-		HashMap<String, FormGroup> templateGroups = template.getGroups();
-		for (Entry<String, FormGroup> templateGroup : templateGroups.entrySet()) {
-			ExecutorService threadPool = Executors.newFixedThreadPool(--cores <= 0 ? 1 : cores);
-			HashSet<Future<HashMap<String, FormArea>>> barcodeDetectorThreads = new HashSet<>();
-
-			HashMap<String, FormArea> barcodeFields = templateGroup.getValue().getAreas();
-			ArrayList<String> barcodeNames = new ArrayList<>(barcodeFields.keySet());
-			Collections.sort(barcodeNames);
-
-			for (String barcodeName : barcodeNames) {
-				FormArea area = barcodeFields.get(barcodeName);
-				BufferedImage subImage = getAreaImage(image, area);
-				Future<HashMap<String, FormArea>> future = threadPool.submit(new BarcodeDetector(this, area, subImage));
-				barcodeDetectorThreads.add(future);
-			}
-
-			for (Future<HashMap<String, FormArea>> thread : barcodeDetectorThreads) {
-				try {
-					HashMap<String, FormArea> threadFields = thread.get();
-					for (String barcodeName : threadFields.keySet()) {
-						FormArea barcode = threadFields.get(barcodeName);
-						addArea(templateGroup.getKey(), barcodeName, barcode);
-					}
-				} catch (InterruptedException | ExecutionException e) {
-					throw new FormScannerException(e.getCause());
-				}
-			}
-			threadPool.shutdown();
-		}
-	}
-
-	private static BufferedImage getAreaImage(BufferedImage image, FormArea area) {
-		int minX = (int) Math.min(area.getCorner(Corners.TOP_LEFT).getX(), area.getCorner(Corners.BOTTOM_LEFT).getX());
-		int minY = (int) Math.min(area.getCorner(Corners.TOP_LEFT).getY(), area.getCorner(Corners.TOP_RIGHT).getY());
-		int maxX = (int) Math.max(area.getCorner(Corners.TOP_RIGHT).getX(),
-				area.getCorner(Corners.BOTTOM_RIGHT).getX());
-		int maxY = (int) Math.max(area.getCorner(Corners.BOTTOM_LEFT).getY(),
-				area.getCorner(Corners.BOTTOM_RIGHT).getY());
-		int subImageWidth = maxX - minX;
-		int hsubImageHeight = maxY - minY;
-		BufferedImage subImage = image.getSubimage(minX, minY, subImageWidth, hsubImageHeight);
-		return subImage;
-	}
+//	public void findAreas() throws FormScannerException {
+//		height = image.getHeight();
+//		width = image.getWidth();
+//		int cores = Runtime.getRuntime().availableProcessors();
+//		// Only for debug
+//		// cores = 1;
+//
+//		HashMap<String, FormGroup> templateGroups = template.getGroups();
+//		for (Entry<String, FormGroup> templateGroup : templateGroups.entrySet()) {
+//			ExecutorService threadPool = Executors.newFixedThreadPool(--cores <= 0 ? 1 : cores);
+//			HashSet<Future<HashMap<String, FormArea>>> barcodeDetectorThreads = new HashSet<>();
+//
+//			HashMap<String, FormArea> barcodeFields = templateGroup.getValue().getAreas();
+//			ArrayList<String> barcodeNames = new ArrayList<>(barcodeFields.keySet());
+//			Collections.sort(barcodeNames);
+//
+//			for (String barcodeName : barcodeNames) {
+//				FormArea area = barcodeFields.get(barcodeName);
+//				Future<HashMap<String, FormArea>> future = threadPool.submit(new BarcodeDetector(this, area, image));
+//				barcodeDetectorThreads.add(future);
+//			}
+//
+//			for (Future<HashMap<String, FormArea>> thread : barcodeDetectorThreads) {
+//				try {
+//					HashMap<String, FormArea> threadFields = thread.get();
+//					for (String barcodeName : threadFields.keySet()) {
+//						FormArea barcode = threadFields.get(barcodeName);
+//						addArea(templateGroup.getKey(), barcodeName, barcode);
+//					}
+//				} catch (InterruptedException | ExecutionException e) {
+//					throw new FormScannerException(e.getCause());
+//				}
+//			}
+//			threadPool.shutdown();
+//		}
+//	}
 
 	/**
 	 * Returns the threshold of the template.
@@ -1430,9 +1425,9 @@ public final class FormTemplate {
 	 * @author Alberto Borsetta
 	 * @return the crop values
 	 */
-	public HashMap<String, Integer> getCrop() {
-		return crop;
-	}
+//	public HashMap<String, Integer> getCrop() {
+//		return crop;
+//	}
 
 	/**
 	 * Sets crop values for images scanned using current template
@@ -1447,12 +1442,12 @@ public final class FormTemplate {
 	 * @param cropFromBottom
 	 *            the padding from bottom margin
 	 */
-	public void setCrop(Integer cropFromTop, Integer cropFromLeft, Integer cropFromRight, Integer cropFromBottom) {
-		crop.put(Constants.TOP, cropFromTop);
-		crop.put(Constants.LEFT, cropFromLeft);
-		crop.put(Constants.RIGHT, cropFromRight);
-		crop.put(Constants.BOTTOM, cropFromBottom);
-	}
+//	public void setCrop(Integer cropFromTop, Integer cropFromLeft, Integer cropFromRight, Integer cropFromBottom) {
+//		crop.put(Constants.TOP, cropFromTop);
+//		crop.put(Constants.LEFT, cropFromLeft);
+//		crop.put(Constants.RIGHT, cropFromRight);
+//		crop.put(Constants.BOTTOM, cropFromBottom);
+//	}
 
 	/**
 	 * Sets crop values for images scanned using current template
@@ -1461,9 +1456,9 @@ public final class FormTemplate {
 	 * @param crop
 	 *            the padding from margin
 	 */
-	public void setCrop(HashMap<String, Integer> crop) {
-		this.crop = crop;
-	}
+//	public void setCrop(HashMap<String, Integer> crop) {
+//		this.crop = crop;
+//	}
 
 	/**
 	 * Returns the name of the image file of the FormTemplate object.
@@ -1486,5 +1481,15 @@ public final class FormTemplate {
 		}
 		groups.clear();
 		pointList.clear();
+	}
+	
+	/**
+	 * Return the already used group names
+	 *  
+	 * @author Alberto Borsetta
+	 * @return the list of the already used names for groups
+	 */
+	public ArrayList<String> getUsedGroupNames() {
+		return usedGroupNames;
 	}
 }

@@ -232,7 +232,8 @@ public class ManageTemplateFrame extends InternalFrame implements WizardTabView 
 
 		setName(Frame.MANAGE_TEMPLATE_FRAME.name());
 		setTitle(FormScannerTranslation
-				.getTranslationFor(FormScannerTranslationKeys.MANAGE_TEMPLATE_FRAME_TITLE));		setBounds(model.getLastPosition(Frame.MANAGE_TEMPLATE_FRAME));
+				.getTranslationFor(FormScannerTranslationKeys.MANAGE_TEMPLATE_FRAME_TITLE));		
+		setBounds(model.getLastPosition(Frame.MANAGE_TEMPLATE_FRAME));
 		setMinimumSize(new Dimension(300, 500));
 		setClosable(true);
 		setMaximizable(true);
@@ -293,7 +294,7 @@ public class ManageTemplateFrame extends InternalFrame implements WizardTabView 
 					tabbedPane.setEnabledAt(i, false);
 				}
 				model.setLastPosition(FormScannerConstants.Frame.valueOf(getName()), getBounds());
-				model.resetFirstPass();
+//				model.resetFirstPass();
 				dispose();
 
 				switch (fieldsType) {

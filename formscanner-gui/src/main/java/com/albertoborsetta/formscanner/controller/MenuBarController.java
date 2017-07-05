@@ -51,10 +51,10 @@ public class MenuBarController implements ActionListener {
 		case SAVE_TEMPLATE:
 			model.saveTemplate(true);
 			break;
-		case LOAD_TEMPLATE:
+		case CREATE_TEMPLATE:
 			model.loadTemplate();
 			break;
-		case USE_TEMPLATE:
+		case LOAD_TEMPLATE:
 			model.openTemplate();
 			break;
 		case EXIT:

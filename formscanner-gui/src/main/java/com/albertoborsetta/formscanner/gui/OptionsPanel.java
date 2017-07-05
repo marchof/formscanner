@@ -74,8 +74,6 @@ public class OptionsPanel extends JSplitPane {
 	private FormScannerModel model;
 	private FormScannerWorkspace workspace;
 	
-	private float defaultDividerLocation = 0.25F;
-	
 	private class InternalShapeType {
 
 		private final ShapeType type;
@@ -160,8 +158,6 @@ public class OptionsPanel extends JSplitPane {
 		setContinuousLayout(true);
 		setLeftComponent(getContentPanel());
 		setRightComponent(desktop);
-		setResizeWeight(0.2);
-		setDividerLocation(defaultDividerLocation);
 		
 		workspace = model.getWorkspace();
 	}

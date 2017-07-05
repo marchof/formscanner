@@ -58,7 +58,6 @@ public class FormScanner {
 							}
 						}
 						FormScannerWorkspace desktop = new FormScannerWorkspace(model);
-//						model.createFormImageFrame();
 						desktop.setIconImage(model.getIcon());
 					} catch (UnsupportedEncodingException
 							| ClassNotFoundException | InstantiationException
@@ -101,29 +100,29 @@ public class FormScanner {
 			Iterator<?> fileIterator = FileUtils.iterateFiles(
 					new File(args[1]), extensions, false);
 			HashMap<String, FormTemplate> filledForms = new HashMap<>();
-			while (fileIterator.hasNext()) {
-				File imageFile = (File) fileIterator.next();
-				
-				try {
-					FormTemplate filledForm = new FormTemplate(
-							imageFile, template);
-					filledForm.findCorners(
-							template.getThreshold(),
-							template.getDensity(), template.getCornerType(), template.getCrop());
-					filledForm.findPoints(
-							template.getThreshold(),
-							template.getDensity(), template.getSize());
-					filledForm.findAreas();
-					filledForms
-					.put(
-							filledForm.getName(),
-							filledForm);
-				} catch (IOException | FormScannerException e) {
-					e.printStackTrace();;
-					System.exit(-1);
-				}
-				
-			}
+//			while (fileIterator.hasNext()) {
+//				File imageFile = (File) fileIterator.next();
+//				
+//				try {
+//					FormTemplate filledForm = new FormTemplate(
+//							imageFile, template);
+//					filledForm.findCorners(
+//							template.getThreshold(),
+//							template.getDensity(), template.getCornerType(), template.getCrop());
+//					filledForm.findPoints(
+//							template.getThreshold(),
+//							template.getDensity(), template.getSize());
+//					filledForm.findAreas();
+//					filledForms
+//					.put(
+//							filledForm.getName(),
+//							filledForm);
+//				} catch (IOException | FormScannerException e) {
+//					e.printStackTrace();;
+//					System.exit(-1);
+//				}
+//				
+//			}
 
 			Date today = Calendar.getInstance().getTime();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");

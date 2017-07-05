@@ -29,8 +29,7 @@ public class FormScannerController implements WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		model.setLastPosition(Frame.DESKTOP_FRAME, e.getWindow().getBounds());
-		e.getWindow().dispose();
-		System.exit(0);
+		model.exitFormScanner();
 	}
 
 	@Override

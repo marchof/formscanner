@@ -9,7 +9,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 
@@ -185,7 +184,7 @@ public class FormFileUtils extends JFileChooser {
 		files.put(FormScannerConstants.COMPRESSED, compressedTemplate.getAbsolutePath());
 		try {
 			ZipFile zipFile = new ZipFile(compressedTemplate);
-			List<FileHeader> fileHeaderList = zipFile.getFileHeaders();
+			ArrayList<FileHeader> fileHeaderList = (ArrayList<FileHeader>) zipFile.getFileHeaders();
 			for (FileHeader fileHeader: fileHeaderList) {
 				String fileName = fileHeader.getFileName();
 				String key = ("xtmpl".equals(FilenameUtils.getExtension(fileName))) ? FormScannerConstants.TEMPLATE : FormScannerConstants.IMAGE;   
@@ -229,13 +228,6 @@ public class FormFileUtils extends JFileChooser {
 		setFileFilter(templateFilter);
 	}
 	
-	private void setTemplateFilter() {
-		resetChoosableFileFilters();
-		FileNameExtensionFilter templateFilter = new FileNameExtensionFilter(
-				FormScannerTranslation.getTranslationFor(FormScannerTranslationKeys.TEMPLATE_FILE), "xtmpl");
-		setFileFilter(templateFilter);
-	}
-
 	protected void setCsvFilter() {
 		resetChoosableFileFilters();
 		FileNameExtensionFilter templateFilter = new FileNameExtensionFilter(
@@ -414,16 +406,20 @@ public class FormFileUtils extends JFileChooser {
 			files.add(templateFile);
 			files.add(imageFile);
 			
-			outputFile = new File(path + template.getName() + "xtmpl");
+			outputFile = new File(path + template.getName() + ".ztmpl");
 			outputFile = saveCompressedTemplateAs(outputFile, files, notify);
 			
-			templateFile.delete();
-			imageFile.delete();
+			deleteTemporaryFiles(templateFile, imageFile);
 		} catch (ParserConfigurationException | IOException e) {
 			e.printStackTrace();
 		}
 
 		return outputFile;
+	}
+
+	private void deleteTemporaryFiles(File templateFile, File imageFile) {
+		templateFile.delete();
+		imageFile.delete();
 	}
 
 	private File getFile(String fileName) {
