@@ -23,7 +23,7 @@ import com.albertoborsetta.formscanner.api.commons.Constants;
  * </ul>
  *
  * @author Alberto Borsetta
- * @version 1.2-SNAPSHOT
+ * @version 2.0-SNAPSHOT
  * @see FormField
  * @see FormPoint
  */

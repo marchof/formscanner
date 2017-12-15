@@ -20,7 +20,7 @@ import com.albertoborsetta.formscanner.api.commons.Constants.Corners;
  * </ul>
  *
  * @author Alberto Borsetta
- * @version 1.2-SNAPSHOT
+ * @version 2.0-SNAPSHOT
  * @see FormPoint
  * @see Corners
  */

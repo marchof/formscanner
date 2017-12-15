@@ -187,7 +187,7 @@ import com.albertoborsetta.formscanner.api.commons.Constants.ShapeType;
  * </pre>
  *
  * @author Alberto Borsetta
- * @version 1.2-SNAPSHOT
+ * @version 2.0-SNAPSHOT
  * @see FormPoint
  * @see FormQuestion
  * @see FieldType

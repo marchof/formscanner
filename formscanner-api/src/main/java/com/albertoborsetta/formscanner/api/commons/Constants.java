@@ -12,7 +12,7 @@ import com.google.zxing.DecodeHintType;
  * The Class Constants.
  *
  * @author Alberto Borsetta
- * @version 1.2-SNAPSHOT
+ * @version 2.0-SNAPSHOT
  */
 public class Constants {
 
