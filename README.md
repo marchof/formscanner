@@ -4,14 +4,18 @@ This is a fork of the [FormScanner](https://formscanner.org/) project at [Source
 
 FormScanner is an OMR (Optical Mark Recognition) software that automatically marks multiple-choice papers. FormScanner not bind you to use a default template of the form, but gives you the ability to use a custom template created from a simple scan of a blank form. The modules can be scanned as images with a simple scanner and processed with FormScanner software. All the collected information can be easily exported to a spreadsheet.
 
-## Build requirements (to be reworked)
+## Build requirements
 
-* [Java 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [Maven (2 or 3)](http://maven.apache.org/)
-* [Mercurial](http://mercurial.selenic.com/) (I'm using [TortoiseHg](http://tortoisehg.bitbucket.org/) with Windows Explorer "shell" integration all-in-one installer with TortoiseHg 3.1.1 and Mercurial 3.1.1)
+* [Git client](https://git-scm.com/)
+* [Java 8](https://javaalmanac.io/jdk/8/)
+* [Maven 3](https://maven.apache.org/)
 
-## Compiling the software (to be reworked)
+## Compiling the Software
 
-    $ hg clone http://hg.code.sf.net/p/formscanner/code formscanner-code
-    $ cd formscanner-code
-    $ mvn clean install
+For local compilation ensure you fulfil the build requirements and run:
+
+    $ git clone https://github.com/marchof/formscanner.git
+    $ cd formscanner
+    $ mvn clean package
+
+The distributable package will be at `./formscanner-distribution/target/formscanner-<version>-bin.zip`.
