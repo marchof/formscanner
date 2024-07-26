@@ -11,7 +11,7 @@
 	<packaging>jar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<quaqua.version>8.0</quaqua.version>
+		<quaqua.version>9.1</quaqua.version>
 	</properties>
 	<name>FormScanner - GUI</name>
 	<dependencies>
@@ -26,7 +26,7 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>ch.randelshofer</groupId>
+			<groupId>org.devzendo</groupId>
 			<artifactId>quaqua</artifactId>
 			<version>${quaqua.version}</version>
 		</dependency>
