@@ -7,20 +7,18 @@ import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
+import boofcv.factory.feature.associate.ConfigAssociateGreedy;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.io.image.ConvertBufferedImage;
-import boofcv.struct.feature.BrightFeature;
 import boofcv.struct.feature.TupleDesc;
+import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.GrayF32;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import org.ddogleg.struct.FastQueue;
-import org.ejml.data.DenseMatrix64F;
 
 /**
  *
@@ -35,15 +33,15 @@ public class FormScannerDetectorEngine {
     
     private BufferedImage image;
 
-    private DetectorEngine<GrayF32, BrightFeature> detectorEngine;
+    private DetectorEngine<GrayF32, TupleDesc_F64> detectorEngine;
     
     public FormScannerDetectorEngine(int threshold, int density, int size, BufferedImage image) {
     	Class<GrayF32> imageType = GrayF32.class;
-		DetectDescribePoint<GrayF32, BrightFeature> detDesc = FactoryDetectDescribe.surfStable(new ConfigFastHessian(1, 10, 300, 1, 9, 4, 4), null, null, imageType);
-		ScoreAssociation<BrightFeature> scorer = FactoryAssociation.defaultScore(detDesc.getDescriptionType());
-		AssociateDescription<BrightFeature> associate = FactoryAssociation.greedy(scorer, Double.MAX_VALUE, true);
+		DetectDescribePoint<GrayF32, TupleDesc_F64> detDesc = FactoryDetectDescribe.surfStable(new ConfigFastHessian(1, 10, 300, 1, 9, 4, 4), null, null, imageType);
+		ScoreAssociation<TupleDesc_F64> scorer = FactoryAssociation.defaultScore(detDesc.getDescriptionType());
+		AssociateDescription<TupleDesc_F64> associate = FactoryAssociation.greedy(new ConfigAssociateGreedy(true, Double.MAX_VALUE), scorer);
 
-		detectorEngine = new DetectorEngine<GrayF32, BrightFeature>(detDesc, associate, imageType);
+		detectorEngine = new DetectorEngine<GrayF32, TupleDesc_F64>(detDesc, associate, imageType);
 		
 		detectorEngine.describeSourceImage(image);
 

@@ -7,7 +7,7 @@ FormScanner is an OMR (Optical Mark Recognition) software that automatically mar
 ## Build requirements
 
 * [Git client](https://git-scm.com/)
-* [Java 8](https://javaalmanac.io/jdk/8/)
+* [Java 11](https://javaalmanac.io/jdk/11/)
 * [Maven 3](https://maven.apache.org/)
 
 ## Compiling the Software

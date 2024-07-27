@@ -108,7 +108,7 @@
 <!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.boofcv</groupId>
-			<artifactId>all</artifactId>
+			<artifactId>boofcv-core</artifactId>
 			<version>${boofcv.version}</version>
 		</dependency>
 	</dependencies>
@@ -118,7 +118,7 @@
 		<nexus-staging-maven-plugin.version>1.6.3</nexus-staging-maven-plugin.version>
 		<maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
 		<zxing.version>3.2.0</zxing.version>
-		<boofcv.version>0.26</boofcv.version>
+		<boofcv.version>1.1.2</boofcv.version>
 <!-- 		<commons-codec.version>1.10</commons-codec.version> -->
 	</properties>
 </project>
