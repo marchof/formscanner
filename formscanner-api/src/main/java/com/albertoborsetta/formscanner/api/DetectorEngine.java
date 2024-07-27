@@ -4,14 +4,15 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ddogleg.struct.FastQueue;
-import org.ejml.data.DenseMatrix64F;
+import org.ddogleg.struct.DogArray;
+import org.ddogleg.struct.FastAccess;
+import org.ejml.data.DMatrixRMaj;
 
 import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.alg.descriptor.UtilFeature;
 import boofcv.alg.distort.PointTransformHomography_F64;
-import boofcv.alg.geo.h.HomographyLinear4;
+import boofcv.alg.geo.h.HomographyDirectLinearTransform;
 import boofcv.io.image.ConvertBufferedImage;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc;
@@ -19,7 +20,7 @@ import boofcv.struct.geo.AssociatedPair;
 import boofcv.struct.image.ImageGray;
 import georegression.struct.point.Point2D_F64;
 
-public class DetectorEngine<T extends ImageGray, TD extends TupleDesc> {
+public class DetectorEngine<T extends ImageGray<T>, TD extends TupleDesc<TD>> {
 
 	private DetectDescribePoint<T, TD> detDesc;
 	private AssociateDescription<TD> associate;
@@ -27,8 +28,8 @@ public class DetectorEngine<T extends ImageGray, TD extends TupleDesc> {
 	private ArrayList<Point2D_F64> pointsA;
 	private ArrayList<Point2D_F64> pointsB;
 	
-	private FastQueue<TD> descA;
-	private FastQueue<TD> descB;
+	private DogArray<TD> descA;
+	private DogArray<TD> descB;
 
 	private Class<T> imageType;
 	
@@ -44,10 +45,10 @@ public class DetectorEngine<T extends ImageGray, TD extends TupleDesc> {
 			this.imageType = imageType;
 			
 			pointsA = new ArrayList<>();
-			descA = UtilFeature.createQueue(detDesc, 100);
+			descA = UtilFeature.createArray(detDesc, 100);
 
 			pointsB = new ArrayList<>();
-			descB = UtilFeature.createQueue(detDesc, 100);
+			descB = UtilFeature.createArray(detDesc, 100);
 		}
 	
 	public void process() {
@@ -57,15 +58,15 @@ public class DetectorEngine<T extends ImageGray, TD extends TupleDesc> {
 	}
 
 	private void calculateHomography(ArrayList<AssociatedPair> p) {
-		HomographyLinear4 linear = new HomographyLinear4(true);
-		DenseMatrix64F matrix = new DenseMatrix64F(3,3);
+		HomographyDirectLinearTransform linear = new HomographyDirectLinearTransform(true);
+		DMatrixRMaj matrix = new DMatrixRMaj(3, 3);
 		linear.process(p, matrix);
 
 		th = new PointTransformHomography_F64(matrix);
 	}
 
 	private ArrayList<AssociatedPair> calculateBestMatches() {
-		FastQueue<AssociatedIndex> matches = associate.getMatches();
+		FastAccess<AssociatedIndex> matches = associate.getMatches();
 		matchesList = matches.toList();
 		sortMatches();
 		ArrayList<AssociatedPair> pairs = new ArrayList<>();
@@ -92,7 +93,7 @@ public class DetectorEngine<T extends ImageGray, TD extends TupleDesc> {
 		associate.associate();
 	}
 
-	private void describeImage(T input, ArrayList<Point2D_F64> points, FastQueue<TD> descs) {
+	private void describeImage(T input, ArrayList<Point2D_F64> points, DogArray<TD> descs) {
 		detDesc.detect(input);
 
 		for (int i = 0; i < detDesc.getNumberOfFeatures(); i++) {
