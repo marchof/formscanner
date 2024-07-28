@@ -4,8 +4,8 @@
     <groupId>com.albertoborsetta</groupId>
     <artifactId>formscanner</artifactId>
     <packaging>pom</packaging>
-    <name>FormScanner-1.1.5</name>
-    <version>1.1.5</version>
+    <name>FormScanner</name>
+    <version>1.1.6-SNAPSHOT</version>
     <modules>
         <module>formscanner-api</module>
         <module>formscanner-main</module>
