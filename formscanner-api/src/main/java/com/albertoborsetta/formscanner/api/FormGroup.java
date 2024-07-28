@@ -5,7 +5,6 @@ import java.util.HashMap;
 /**
 *
 * @author Alberto Borsetta
-* @version 1.1.4
 */
 public class FormGroup {
 
