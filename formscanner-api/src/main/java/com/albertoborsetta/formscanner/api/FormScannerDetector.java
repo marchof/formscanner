@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 /**
  *
  * @author Alberto Borsetta
- * @version 1.1.4
  */
 public abstract class FormScannerDetector {
 
