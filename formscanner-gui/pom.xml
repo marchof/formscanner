@@ -10,7 +10,6 @@
 	<artifactId>formscanner-gui</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<quaqua.version>9.1</quaqua.version>
 	</properties>
 	<name>FormScanner - GUI</name>
