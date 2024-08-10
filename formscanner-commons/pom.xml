@@ -33,16 +33,4 @@
 			<artifactId>log4j-core</artifactId>
 		</dependency>
 	</dependencies>
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>*.*</exclude>
-					<exclude>**/*.*</exclude>
-					<exclude>*</exclude>
-				</excludes>
-			</resource>
-		</resources>
-	</build>
 </project>

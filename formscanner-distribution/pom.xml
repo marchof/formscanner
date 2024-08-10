@@ -50,6 +50,6 @@
         </dependency>
     </dependencies>
     <properties>
-        <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
     </properties>
 </project>
