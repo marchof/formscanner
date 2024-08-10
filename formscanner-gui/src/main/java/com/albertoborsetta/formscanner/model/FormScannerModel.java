@@ -1,9 +1,13 @@
 package com.albertoborsetta.formscanner.model;
 
 import java.awt.ComponentOrientation;
+import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,15 +20,17 @@ import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.xml.sax.SAXException;
 
 import com.albertoborsetta.formscanner.api.FormArea;
-import com.albertoborsetta.formscanner.api.FormQuestion;
 import com.albertoborsetta.formscanner.api.FormPoint;
+import com.albertoborsetta.formscanner.api.FormQuestion;
 import com.albertoborsetta.formscanner.api.FormTemplate;
 import com.albertoborsetta.formscanner.api.commons.Constants.CornerType;
 import com.albertoborsetta.formscanner.api.commons.Constants.Corners;
@@ -43,25 +49,17 @@ import com.albertoborsetta.formscanner.commons.translation.FormScannerTranslatio
 import com.albertoborsetta.formscanner.commons.translation.FormScannerTranslationKeys;
 import com.albertoborsetta.formscanner.gui.AboutFrame;
 import com.albertoborsetta.formscanner.gui.FileListFrame;
+import com.albertoborsetta.formscanner.gui.FormScannerDesktop;
 import com.albertoborsetta.formscanner.gui.ImageFrame;
 import com.albertoborsetta.formscanner.gui.InternalFrame;
 import com.albertoborsetta.formscanner.gui.ManageTemplateFrame;
 import com.albertoborsetta.formscanner.gui.OptionsFrame;
 import com.albertoborsetta.formscanner.gui.RenameFileFrame;
 import com.albertoborsetta.formscanner.gui.ResultsGridFrame;
-import com.albertoborsetta.formscanner.gui.FormScannerDesktop;
-
-import java.awt.HeadlessException;
-import java.awt.Image;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 public class FormScannerModel {
+	
+	private static final Logger logger = LogManager.getLogger(FormScannerModel.class.getName());
 
 	public static final String COL_DX = "COL_DX";
 	public static final String COL_DY = "COL_DY";
@@ -115,7 +113,6 @@ public class FormScannerModel {
 	private String lookAndFeel;
 	private Image defaultIcon;
 
-	private final Logger logger;
 	private Boolean resetAutoNumbering;
 	private Boolean groupsEnabled;
 	private String questionNameTemplate;
@@ -129,13 +126,6 @@ public class FormScannerModel {
 	private int nextGroupIndex=1;
 
 	public FormScannerModel() throws UnsupportedEncodingException {
-		String path = FormScannerModel.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		String installPath = URLDecoder.decode(path, "UTF-8");
-		installPath = StringUtils.substringBeforeLast(installPath, "lib");
-		installPath = StringUtils.defaultIfBlank(System.getProperty("FormScanner_HOME"), installPath);
-		
-		System.setProperty("log4j.configurationFile", "file:\\" + installPath + "/config/log4j.xml");
-		logger = LogManager.getLogger(FormScannerModel.class.getName());
 
 		String installationLanguage = StringUtils.defaultIfBlank(System.getProperty("FormScanner_LANGUAGE"),
 				System.getenv("FormScanner_LANGUAGE"));
@@ -154,7 +144,7 @@ public class FormScannerModel {
 
 		propertiesPath = propertiesPath + "/properties/";
 
-		configurations = FormScannerConfiguration.getConfiguration(propertiesPath, installPath + "/");
+		configurations = FormScannerConfiguration.getConfiguration(propertiesPath);
 
 		templatePath = configurations.getProperty(FormScannerConfigurationKeys.TEMPLATE_SAVE_PATH,
 				templatePath + "/FormScanner/templates/");
@@ -173,8 +163,7 @@ public class FormScannerModel {
 
 		orientation = ComponentOrientation.getOrientation(locale);
 
-		FormScannerTranslation.setTranslation(installPath, lang);
-		FormScannerResources.setResources(installPath);
+		FormScannerTranslation.setTranslation(lang);
 
 		threshold = (Integer) configurations.getProperty(FormScannerConfigurationKeys.THRESHOLD,
 				FormScannerConfigurationKeys.DEFAULT_THRESHOLD);

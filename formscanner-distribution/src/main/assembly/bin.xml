@@ -16,89 +16,21 @@
 	<moduleSets>
 		<moduleSet>
 			<useAllReactorProjects>true</useAllReactorProjects>
+			<includes>
+				<include>com.albertoborsetta:formscanner-commons</include>
+			</includes>
 			<sources>
 				<includeModuleDirectory>false</includeModuleDirectory>
 				<fileSets>
 					<fileSet>
-						<outputDirectory>/config</outputDirectory>
-						<directory>src/main/resources/config</directory>
-						<includes>
-							<include>formscanner.properties</include>
-							<include>log4j.xml</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/language</outputDirectory>
-						<directory>src/main/resources/language</directory>
-						<includes>
-							<include>*.lang</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/samples</outputDirectory>
-						<directory>src/main/resources/samples</directory>
-						<includes>
-							<include>*.jpg</include>
-							<include>*.xtmpl</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/samples/questionnaire</outputDirectory>
-						<directory>src/main/resources/samples/questionnaire</directory>
-						<includes>
-							<include>*.jpg</include>
-							<include>*.xtmpl</include>
-							<include>*.docx</include>
-							<include>*.pdf</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/samples/test</outputDirectory>
-						<directory>src/main/resources/samples/test</directory>
-						<includes>
-							<include>*.jpg</include>
-							<include>*.xtmpl</include>
-							<include>*.docx</include>
-							<include>*.pdf</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/icons</outputDirectory>
-						<directory>src/main/resources/icons</directory>
-						<includes>
-							<include>*.png</include>
-							<include>*.bmp</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/bin</outputDirectory>
-						<directory>src/main/resources/bin</directory>
-						<includes>
-							<include>formscanner.*</include>
-							<include>formscanner</include>
-						</includes>
-					</fileSet>
-					<fileSet>
-						<outputDirectory>/license</outputDirectory>
-						<directory>src/main/resources/license</directory>
-						<includes>
-							<include>*.txt</include>
-						</includes>
-					</fileSet>
-					<fileSet>
 						<outputDirectory>/</outputDirectory>
 						<directory>src/main/resources</directory>
 						<includes>
-							<include>CHANGELOG</include>
-							<include>README</include>
+							<include>license/license.txt</include>
 						</includes>
 					</fileSet>
 				</fileSets>
 			</sources>
-			<binaries>
-				<outputDirectory>/lib</outputDirectory>
-				<unpack>false</unpack>
-			</binaries>
 		</moduleSet>
 	</moduleSets>
 	<fileSets>

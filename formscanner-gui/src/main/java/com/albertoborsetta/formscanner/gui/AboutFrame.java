@@ -4,10 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -18,21 +14,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.albertoborsetta.formscanner.commons.FormScannerConstants;
 import com.albertoborsetta.formscanner.commons.FormScannerConstants.Frame;
 import com.albertoborsetta.formscanner.commons.resources.FormScannerResources;
 import com.albertoborsetta.formscanner.commons.resources.FormScannerResourcesKeys;
 import com.albertoborsetta.formscanner.commons.translation.FormScannerTranslation;
 import com.albertoborsetta.formscanner.commons.translation.FormScannerTranslationKeys;
+import com.albertoborsetta.formscanner.controller.AboutFrameController;
 import com.albertoborsetta.formscanner.gui.builder.ButtonBuilder;
 import com.albertoborsetta.formscanner.gui.builder.PanelBuilder;
 import com.albertoborsetta.formscanner.gui.builder.TabbedPaneBuilder;
-import com.albertoborsetta.formscanner.controller.AboutFrameController;
 import com.albertoborsetta.formscanner.model.FormScannerModel;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class AboutFrame extends InternalFrame {
 
@@ -41,7 +35,6 @@ public class AboutFrame extends InternalFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static AboutFrameController aboutFrameController;
-	private static final Logger logger = LogManager.getLogger(AboutFrame.class.getName());
 
 	/**
 	 * Create the frame.
@@ -91,25 +84,7 @@ public class AboutFrame extends InternalFrame {
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEnabled(true);
-
-		String licenseText = "";
-		try {
-			File license = FormScannerResources.getLicense();
-			FileReader fileReader;
-			fileReader = new FileReader(license);
-			BufferedReader reader = new BufferedReader(fileReader);
-
-			String temp;
-			while ((temp = reader.readLine()) != null) {
-				licenseText += temp + "\n";
-			}
-
-			reader.close();
-		} catch (IOException e) {
-			logger.debug("Error", e);
-		}
-
-		textArea.append(licenseText);
+		textArea.append(FormScannerResources.getLicense());
 		textArea.getCaret().setDot(0);
 		
 

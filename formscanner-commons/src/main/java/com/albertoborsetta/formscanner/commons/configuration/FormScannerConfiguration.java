@@ -12,8 +12,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class FormScannerConfiguration extends Properties {
-
+	
+	private static final String DEFAULT_CONFIG_PATH= "/config/formscanner.properties";
 	private static final String CONFIG_FILE_NAME = "formscanner.properties";
+	
 	private static String userConfigFile;
 
 	/**
@@ -34,22 +36,16 @@ public class FormScannerConfiguration extends Properties {
 		}
 	}
 
-	public static FormScannerConfiguration getConfiguration(String userPath,
-			String installPath) {
+	public static FormScannerConfiguration getConfiguration(String userPath) {
 		if (configurations == null) {
 			userConfigFile = userPath + CONFIG_FILE_NAME;
 
 			File userFile = new File(userConfigFile);
 			if (!userFile.exists() || userFile.isDirectory()) {
-				String defaultConfigFile = installPath + "config/" + CONFIG_FILE_NAME;
-				File defaultFile = new File(defaultConfigFile);
-
 				try {
-					FileUtils.copyFile(defaultFile, userFile);
+					FileUtils.copyURLToFile(FormScannerConfiguration.class.getResource(DEFAULT_CONFIG_PATH), userFile);
 				} catch (IOException e) {
-					System.out
-							.println("Cannot load user configurations... try loading defaults");
-					userConfigFile = defaultConfigFile;
+					logger.error("Cannot create user configuration from default configurations.", e);
 				}
 			}
 

@@ -1,14 +1,16 @@
 package com.albertoborsetta.formscanner.commons.translation;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FormScannerTranslation extends Properties {
+	
+	private static final String TRANSLATION_PATH= "/language/formscanner-%s.lang";
 
 	/**
      *
@@ -18,22 +20,17 @@ public class FormScannerTranslation extends Properties {
 	private static final Logger logger = LogManager.getLogger(FormScannerTranslation.class.getName());
 	protected static FormScannerTranslation translations = null;
 
-	private FormScannerTranslation(String path, String language) {
-		super();
-		try {
-			String translationFile = path + "/language/formscanner-" + language
-					+ ".lang";
-			final FileInputStream translationInputStream = new FileInputStream(
-					translationFile);
-
-			load(translationInputStream);
+	private FormScannerTranslation(String language) {
+		String translationFile = String.format(TRANSLATION_PATH, language);
+		try (InputStream in = FormScannerTranslation.class.getResourceAsStream(translationFile)) {
+			load(in);
 		} catch (IOException e) {
 			logger.debug("Error", e);
 		}
 	}
 
-	public static void setTranslation(String path, String language) {
-		translations = new FormScannerTranslation(path, language);
+	public static void setTranslation(String language) {
+		translations = new FormScannerTranslation(language);
 	}
 
 	public static String getTranslationFor(String key) {
