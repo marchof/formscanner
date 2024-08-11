@@ -42,16 +42,6 @@
 		<developerConnection>hg clone http://hg.code.sf.net/p/formscanner/code formscanner-code</developerConnection>
 		<url>hg clone http://hg.code.sf.net/p/formscanner/code formscanner-code</url>
 	</scm>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -70,7 +60,4 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 	</dependencies>
-	<properties>
-		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
-	</properties>
 </project>
