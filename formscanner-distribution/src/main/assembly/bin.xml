@@ -37,7 +37,17 @@
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<outputDirectory>/</outputDirectory>
+			<excludes>
+				<exclude>README</exclude>
+			</excludes>
 		</fileSet>
 	</fileSets>
+	<files>
+		<file>
+			<source>src/main/resources/README</source>
+			<outputDirectory>/</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+	</files>
 </assembly>
 

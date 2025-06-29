@@ -17,8 +17,4 @@
 
 Run FormScanner from binaries:
 
-java -jar lib/{FormScanner_MAINJAR}
-
-example:
-
-java -jar lib/formscanner-main-1.1.6-SNAPSHOT.jar
+java -jar lib/formscanner-main-${project.version}.jar
