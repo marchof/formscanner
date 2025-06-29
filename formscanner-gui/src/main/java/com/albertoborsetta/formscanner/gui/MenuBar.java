@@ -72,7 +72,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 				.withActionListener(formScannerController)
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_O, InputEvent.CTRL_MASK))
+								KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK))
 				.withMnemonic(
 						FormScannerTranslation
 								.getMnemonicFor(FormScannerTranslationKeys.OPEN_IMAGES_MNEMONIC))
@@ -92,7 +92,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 								.getMnemonicFor(FormScannerTranslationKeys.EXIT_MNEMONIC))
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_X, InputEvent.CTRL_MASK))
+								KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.EXIT_ICON_16))
@@ -122,7 +122,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 								.getMnemonicFor(FormScannerTranslationKeys.RENAME_FILES_MNEMONIC))
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_R, InputEvent.CTRL_MASK))
+								KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.RENAME_FILES_ICON_16))
@@ -139,7 +139,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 								.getMnemonicFor(FormScannerTranslationKeys.ANALYZE_FILES_ALL_MNEMONIC))
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_A, InputEvent.CTRL_MASK))
+								KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_ALL_ICON_16))
@@ -156,7 +156,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 								.getMnemonicFor(FormScannerTranslationKeys.ANALYZE_FILES_MNEMONIC))
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_I, InputEvent.CTRL_MASK))
+								KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.ANALYZE_FILES_ICON_16))
@@ -186,7 +186,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 								.getMnemonicFor(FormScannerTranslationKeys.CREATE_TEMPLATE_MNEMONIC))
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_C, InputEvent.CTRL_MASK))
+								KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.EDIT_ICON_16))
@@ -203,7 +203,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 								.getMnemonicFor(FormScannerTranslationKeys.LOAD_TEMPLATE_MNEMONIC))
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_L, InputEvent.CTRL_MASK))
+								KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.IMPORT_ICON_16))
@@ -244,7 +244,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 				.withActionListener(formScannerController)
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_F1, InputEvent.ALT_MASK))
+								KeyEvent.VK_F1, InputEvent.ALT_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.ABOUT_ICON_16))
@@ -270,7 +270,7 @@ public final class MenuBar extends JMenuBar implements MenuView {
 				.withActionListener(formScannerController)
 				.withAccelerator(
 						KeyStroke.getKeyStroke(
-								KeyEvent.VK_PLUS, InputEvent.CTRL_MASK))
+								KeyEvent.VK_PLUS, InputEvent.CTRL_DOWN_MASK))
 				.withIcon(
 						FormScannerResources
 								.getIconFor(FormScannerResourcesKeys.CONFIG_ICON_16))
