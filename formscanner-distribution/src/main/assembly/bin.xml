@@ -13,31 +13,21 @@
 			<outputDirectory>/lib</outputDirectory>
 		</dependencySet>
 	</dependencySets>
-	<moduleSets>
-		<moduleSet>
-			<useAllReactorProjects>true</useAllReactorProjects>
-			<includes>
-				<include>com.albertoborsetta:formscanner-commons</include>
-			</includes>
-			<sources>
-				<includeModuleDirectory>false</includeModuleDirectory>
-				<fileSets>
-					<fileSet>
-						<outputDirectory>/</outputDirectory>
-						<directory>src/main/resources</directory>
-						<includes>
-							<include>license/license.txt</include>
-						</includes>
-					</fileSet>
-				</fileSets>
-			</sources>
-		</moduleSet>
-	</moduleSets>
 	<fileSets>
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<outputDirectory>/</outputDirectory>
+			<excludes>
+				<exclude>README</exclude>
+			</excludes>
 		</fileSet>
 	</fileSets>
+	<files>
+		<file>
+			<source>src/main/resources/README</source>
+			<outputDirectory>/</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+	</files>
 </assembly>
 
