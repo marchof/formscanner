@@ -23,7 +23,6 @@ cd formscanner-git
 ../fast-export/hg-fast-export.sh -r ../formscanner-hg -A ../../authors
 ```
 
-Where the `authors` file normalizes various usages in Mercurial of the original author's [superalberto76](https://github.com/superalberto76) name and email. The file is not shown here to protect his contact details.
-
+Where the `authors` file normalizes various usages of the original author's [superalberto76](https://github.com/superalberto76) name and email in Mercurial. The file is not shown here to protect his contact details.
 
 The main branch of this Git repository is based on the [1.1.4](https://github.com/marchof/formscanner/releases/tag/1.1.4) tag.
