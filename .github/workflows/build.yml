@@ -27,4 +27,5 @@ jobs:
         name: Latest Snapshot
         body: Download the latest snapshot from the master branch.
         tag_name: latest
+        make_latest: false
         files: formscanner-distribution/target/formscanner-*-bin.zip
