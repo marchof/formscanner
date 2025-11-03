@@ -9,8 +9,10 @@ FormScanner is an OMR (Optical Mark Recognition) software that automatically mar
 
 ## Installing the Distribution
 
-Download the latest release and unzip it. For execution you need any current Java Version
+Download the [latest release](https://github.com/marchof/formscanner/releases/latest) and unzip it. For execution you need any current Java Version
 ([Java 8](https://javaalmanac.io/jdk/8/), [Java 11](https://javaalmanac.io/jdk/11/), [Java 17](https://javaalmanac.io/jdk/17/), [Java 21](https://javaalmanac.io/jdk/21/) or [Java 25](https://javaalmanac.io/jdk/25/)).
+
+For testing you can also download the [latest snapshot build](https://github.com/marchof/formscanner/releases/tag/snapshot).
 
 ## Building Yourself
 
