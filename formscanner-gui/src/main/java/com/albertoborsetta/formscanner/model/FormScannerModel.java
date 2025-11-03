@@ -363,9 +363,8 @@ public class FormScannerModel {
 							filledForm.findAreas(image);
 							filledForms.put(filledForm.getName(), filledForm);
 						} catch (Exception e) {
-							logger.debug("Error", e);
+							logger.error("Error while processing image " + imageFile, e);
 						}
-
 					}
 
 					Date today = Calendar.getInstance().getTime();
