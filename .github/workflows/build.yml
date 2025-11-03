@@ -17,4 +17,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: formscanner
-        path: formscanner-distribution/target/formscanner-*/**
+        path: formscanner-distribution/target/formscanner-*-bin.zip

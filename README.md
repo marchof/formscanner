@@ -26,4 +26,4 @@ For local compilation ensure you fulfill the build requirements
     $ cd formscanner
     $ mvn clean package
 
-The distributable package will be at `./formscanner-distribution/target/formscanner-<version>-bin`.
+The distributable package will be at `./formscanner-distribution/target/formscanner-<version>-bin.zip`.
