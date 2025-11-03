@@ -126,7 +126,7 @@ public class FormScannerConstants extends Constants {
 			Arrays.asList(new String[] { INSTALLATION_ARABIC }));
 
 	
-	public static final String WIKI_PAGE = "http://www.formscanner.org/forum";
+	public static final String WIKI_PAGE = "https://sites.google.com/site/examgrader/forum";
 	public static final String THRESHOLD = "THRESHOLD";
 	public static final String DENSITY = "DENSITY";
 	public static final String SAVE_OPTIONS = "SAVE_OPTIONS";
