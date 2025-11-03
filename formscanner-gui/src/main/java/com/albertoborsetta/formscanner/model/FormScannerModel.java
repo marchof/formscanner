@@ -1,6 +1,7 @@
 package com.albertoborsetta.formscanner.model;
 
 import java.awt.ComponentOrientation;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -8,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -813,36 +814,10 @@ public class FormScannerModel {
 
 	}
 
-	public void linkToHelp(URL url) {
-		String osName = System.getProperty("os.name").toLowerCase();
+	public void openLink(String url) {
 		try {
-
-			if (osName.indexOf( "win" ) >= 0) {
-				// Windows
-				Runtime.getRuntime().exec(
-						(new StringBuilder()).append("rundll32 url.dll,FileProtocolHandler ").append(url).toString());
-			}
-			else if (osName.indexOf( "mac" ) >= 0) {
-				// Mac
-				Runtime.getRuntime().exec(
-						(new StringBuilder()).append("open ").append(url).toString());
-			} else if (osName.indexOf( "nix") >=0 || osName.indexOf( "nux") >=0) {
-				// Linux/Unix
-				String browsers[] = {"firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape", "safari", "links","lynx"};
-				String browser = null;
-				for (int i = 0; i < browsers.length && browser == null; i++) {
-					if (Runtime.getRuntime().exec(new String[] { "which", browsers[i] }).waitFor() == 0) {
-						browser = browsers[i];
-					}
-				}
-
-				if (browser == null) {
-					throw new Exception("Could not find web browser");
-				}
-
-				Runtime.getRuntime().exec(new String[] { browser, FormScannerConstants.WIKI_PAGE });
-			}
-		} catch (Exception e) {
+			Desktop.getDesktop().browse(URI.create(url));
+		} catch (IOException e) {
 			logger.debug("An error occured while trying to open the web browser!", e);
 		}
 	}
