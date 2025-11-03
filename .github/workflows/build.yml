@@ -18,3 +18,9 @@ jobs:
       with:
         name: formscanner
         path: formscanner-distribution/target/formscanner-*-bin.zip
+    - uses: softprops/action-gh-release@v2
+      if: github.ref == 'refs/heads/publish-master'
+      with:
+        name: Latest Snapshot
+        body: Download the latest snapshot from the master branch.
+        files: formscanner-distribution/target/formscanner-*-bin.zip
